@@ -59,13 +59,20 @@ router.get('/scripts/library/:id', (req, res) => {
 router.get('/settings',         (req, res) => res.json(extra.settings()));
 
 router.get('/policy/packages',  (req, res) => res.json(mock.policyPackages()));
+router.get('/policy/packages/:name', (req, res) => {
+  const detail = extra.policyPackageDetail(req.params.name);
+  if (!detail) return res.status(404).json({ error: `Package "${req.params.name}" not found.` });
+  res.json(detail);
+});
 router.get('/policy/heatmap',   (req, res) => res.json(mock.policyHeatmap()));
 router.get('/policy/profiles',  (req, res) => res.json(extra.policyProfiles()));
+router.get('/policy/profiles/:type/:name', (req, res) => res.json(extra.policyProfileDetail(req.params.type, req.params.name)));
 router.get('/objects',           (req, res) => res.json(extra.policyObjects()));
 router.get('/objects/addresses', (req, res) => res.json(extra.policyObjects().addresses));
 router.get('/objects/services',  (req, res) => res.json(extra.policyObjects().services));
 router.get('/objects/schedules', (req, res) => res.json(extra.policyObjects().schedules));
 router.get('/objects/vips',      (req, res) => res.json(extra.policyObjects().vips));
+router.get('/objects/:name/usage', (req, res) => res.json(extra.policyObjectDetail(req.params.name)));
 router.get('/tasks',            (req, res) => res.json(mock.tasks()));
 router.get('/adoms',            (req, res) => res.json(mock.adoms()));
 router.get('/analyzer',         (req, res) => res.json(mock.analyzerFindings()));
