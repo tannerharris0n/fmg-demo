@@ -7,6 +7,7 @@
 const express = require('express');
 const mock = require('./services/mockData');
 const extra = require('./services/mockDataExtra');
+const v8 = require('./services/mockDataV8');
 
 const router = express.Router();
 
@@ -101,6 +102,24 @@ router.get('/fabric/sdwan/:overlay', (req, res) => res.json(extra.sdwanOverlayDe
 router.get('/fabric/vpn/ipsec',      (req, res) => res.json(extra.vpnIpsecTunnels()));
 router.get('/fabric/vpn/ssl',        (req, res) => res.json(extra.sslVpnSessions()));
 router.get('/fabric/ha',             (req, res) => res.json(extra.haClustersDetailed()));
+
+// v0.8 endpoints
+router.get('/sase/overview',  (req, res) => res.json(v8.saseOverview()));
+router.get('/sase/ztna-apps', (req, res) => res.json(v8.saseZtnaApps()));
+router.get('/switches',       (req, res) => res.json(v8.switchList()));
+router.get('/switches/:name', (req, res) => {
+  const sw = v8.switchDetail(req.params.name);
+  if (!sw) return res.status(404).json({ error: 'Switch not found' });
+  res.json(sw);
+});
+router.get('/aps',            (req, res) => res.json(v8.apList()));
+router.get('/aps/ssid-config', (req, res) => res.json(v8.apSsidConfig()));
+router.get('/calendar',       (req, res) => res.json(v8.changeCalendar()));
+router.get('/policy/packages/:name/diff', (req, res) => {
+  const diff = v8.configDiff(req.params.name, req.query.at);
+  if (!diff) return res.status(404).json({ error: 'Package not found' });
+  res.json(diff);
+});
 
 // Preferences are session-local on the frontend (Zustand persist), so the
 // demo doesn't need a user-specific preferences API. Return defaults.
