@@ -42,7 +42,7 @@ const NAV = [
       { to: '/policy/packages', label: 'Packages' },
       { to: '/policy/objects', label: 'Objects' },
       { to: '/policy/profiles', label: 'Profiles' },
-      { to: '/policy/analyzer', label: 'Analyzer', badge: '23', badgeTone: 'warning' },
+      { to: '/policy/analyzer', label: 'Analyzer', badge: '18', badgeTone: 'warning' },
     ],
   },
   { kind: 'group', label: 'Security' },
@@ -50,13 +50,13 @@ const NAV = [
     kind: 'item', to: '/security', label: 'Security', icon: ShieldCheck,
     children: [
       { to: '/security/threats', label: 'Threats' },
-      { to: '/security/drift', label: 'Drift', badge: '4', badgeTone: 'danger' },
+      { to: '/security/drift', label: 'Drift', badge: '2', badgeTone: 'danger' },
       { to: '/security/audit', label: 'Admin audit' },
-      { to: '/security/cve', label: 'CVE watch', badge: '5', badgeTone: 'warning' },
+      { to: '/security/cve', label: 'CVE watch', badge: '3', badgeTone: 'warning' },
     ],
   },
   { kind: 'group', label: 'Ops' },
-  { kind: 'item', to: '/tasks',    label: 'Tasks',    icon: Zap,       badge: '2', badgeTone: 'info' },
+  { kind: 'item', to: '/tasks',    label: 'Tasks',    icon: Zap,       badge: '1', badgeTone: 'info' },
   { kind: 'item', to: '/scripts',  label: 'Scripts',  icon: Code2 },
   { kind: 'item', to: '/settings', label: 'Settings', icon: Settings },
 ];
@@ -159,9 +159,9 @@ export function NavTree() {
       <div className="border-t border-surface-600/60 px-3 py-2.5">
         <div className="flex items-center gap-1.5">
           <StatusDot status="ok" size="sm" />
-          <span className="text-[11px] text-ink-200 truncate">fmg.demo.net</span>
+          <span className="text-[11px] text-ink-200 truncate">fmg.tanlab.net</span>
         </div>
-        <div className="text-[10.5px] text-ink-400 mt-0.5">ADOM: root · v7.4.5</div>
+        <div className="text-[10.5px] text-ink-400 mt-0.5">ADOM: root · v7.6.6</div>
       </div>
     </aside>
   );

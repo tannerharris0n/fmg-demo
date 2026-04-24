@@ -40,11 +40,12 @@ router.get('/dashboard', (req, res) => {
 router.get('/devices',          (req, res) => res.json(mock.deviceFleet()));
 router.get('/policy/packages',  (req, res) => res.json(mock.policyPackages()));
 router.get('/policy/heatmap',   (req, res) => res.json(mock.policyHeatmap()));
-router.get('/objects/addresses', (req, res) => res.json([
-  { name: 'CORP-VLANS',    type: 'group',   members: 12 },
-  { name: 'PRINTERS',      type: 'group',   members: 8 },
-  { name: 'SERVERS-PROD',  type: 'iprange', subnet: '10.10.0.0/16' },
-]));
+router.get('/policy/profiles',  (req, res) => res.json(extra.policyProfiles()));
+router.get('/objects',           (req, res) => res.json(extra.policyObjects()));
+router.get('/objects/addresses', (req, res) => res.json(extra.policyObjects().addresses));
+router.get('/objects/services',  (req, res) => res.json(extra.policyObjects().services));
+router.get('/objects/schedules', (req, res) => res.json(extra.policyObjects().schedules));
+router.get('/objects/vips',      (req, res) => res.json(extra.policyObjects().vips));
 router.get('/tasks',            (req, res) => res.json(mock.tasks()));
 router.get('/adoms',            (req, res) => res.json(mock.adoms()));
 router.get('/analyzer',         (req, res) => res.json(mock.analyzerFindings()));
