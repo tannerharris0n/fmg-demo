@@ -1,0 +1,29 @@
+{
+  "name": "fmg-demo-backend",
+  "version": "1.0.0",
+  "description": "Read-only demo backend for FMG Console",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js | pino-pretty",
+    "start": "node src/server.js"
+  },
+  "author": "Tanner Harrison",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "commonjs",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^8.0.0",
+    "pino": "^9.5.0",
+    "pino-http": "^10.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "pino-pretty": "^11.3.0"
+  }
+}

@@ -1,0 +1,68 @@
+'use strict';
+/**
+ * Demo routes. Every endpoint returns fixture data from services/mockData.js.
+ * Matches the surface area that the real FMG Console backend exposes so the
+ * frontend is unchanged.
+ */
+const express = require('express');
+const mock = require('./services/mockData');
+
+const router = express.Router();
+
+router.get('/health', (req, res) => {
+  res.json({
+    ok: true,
+    env: process.env.NODE_ENV || 'development',
+    mock: true,
+    demo: true,
+    time: new Date().toISOString(),
+  });
+});
+
+router.get('/dashboard', (req, res) => {
+  res.json({
+    summary: mock.dashboardSummary(),
+    sdwan: mock.sdwanOverlays(),
+    vpn: mock.vpnTunnels(),
+    ha: mock.haClusters(),
+    firmware: mock.firmwarePosture(),
+    fleet: mock.deviceFleet(),
+    heatmap: mock.policyHeatmap(),
+    threats: mock.threatActivity(),
+    cves: mock.cveWatchlist(),
+    drift: mock.driftAlerts(),
+    audit: mock.adminAudit(),
+    activity: mock.activityFeed(),
+  });
+});
+
+router.get('/devices',          (req, res) => res.json(mock.deviceFleet()));
+router.get('/policy/packages',  (req, res) => res.json(mock.policyPackages()));
+router.get('/policy/heatmap',   (req, res) => res.json(mock.policyHeatmap()));
+router.get('/objects/addresses', (req, res) => res.json([
+  { name: 'CORP-VLANS',    type: 'group',   members: 12 },
+  { name: 'PRINTERS',      type: 'group',   members: 8 },
+  { name: 'SERVERS-PROD',  type: 'iprange', subnet: '10.10.0.0/16' },
+]));
+router.get('/tasks',            (req, res) => res.json(mock.tasks()));
+router.get('/adoms',            (req, res) => res.json(mock.adoms()));
+router.get('/analyzer',         (req, res) => res.json(mock.analyzerFindings()));
+
+router.get('/install/:packageId/preview', (req, res) => {
+  res.json(mock.installPreview(req.params.packageId));
+});
+
+router.get('/security/drift',          (req, res) => res.json(mock.driftAlerts()));
+router.get('/security/drift/:device',  (req, res) => res.json(mock.driftDetail(req.params.device)));
+router.get('/security/cves',           (req, res) => res.json(mock.cveWatchlist()));
+router.get('/security/cves/:id',       (req, res) => res.json(mock.cveDetail(req.params.id)));
+router.get('/security/audit',          (req, res) => res.json(mock.adminAudit()));
+router.get('/security/threats',        (req, res) => res.json(mock.threatActivity()));
+
+// Preferences are session-local on the frontend (Zustand persist), so the
+// demo doesn't need a user-specific preferences API. Return defaults.
+router.get('/preferences', (req, res) => {
+  res.json({ preset: 'network', hiddenTiles: [], tileOrder: null });
+});
+
+module.exports = router;
