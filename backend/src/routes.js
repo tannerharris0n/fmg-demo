@@ -6,6 +6,7 @@
  */
 const express = require('express');
 const mock = require('./services/mockData');
+const extra = require('./services/mockDataExtra');
 
 const router = express.Router();
 
@@ -57,7 +58,21 @@ router.get('/security/drift/:device',  (req, res) => res.json(mock.driftDetail(r
 router.get('/security/cves',           (req, res) => res.json(mock.cveWatchlist()));
 router.get('/security/cves/:id',       (req, res) => res.json(mock.cveDetail(req.params.id)));
 router.get('/security/audit',          (req, res) => res.json(mock.adminAudit()));
+router.get('/security/audit/log',      (req, res) => res.json(extra.adminAuditLog()));
 router.get('/security/threats',        (req, res) => res.json(mock.threatActivity()));
+router.get('/security/threats/events',       (req, res) => res.json(extra.threatEvents()));
+router.get('/security/threats/top-sources',  (req, res) => res.json(extra.threatTopSources()));
+router.get('/security/threats/top-targets',  (req, res) => res.json(extra.threatTopTargets()));
+
+router.get('/fabric/sdwan', (req, res) => res.json({
+  overlays: mock.sdwanOverlays(),
+  avgSla: 91,
+  atRisk: 1,
+}));
+router.get('/fabric/sdwan/:overlay', (req, res) => res.json(extra.sdwanOverlayDetail(req.params.overlay)));
+router.get('/fabric/vpn/ipsec',      (req, res) => res.json(extra.vpnIpsecTunnels()));
+router.get('/fabric/vpn/ssl',        (req, res) => res.json(extra.sslVpnSessions()));
+router.get('/fabric/ha',             (req, res) => res.json(extra.haClustersDetailed()));
 
 // Preferences are session-local on the frontend (Zustand persist), so the
 // demo doesn't need a user-specific preferences API. Return defaults.
