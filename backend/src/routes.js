@@ -23,6 +23,7 @@ router.get('/health', (req, res) => {
 router.get('/dashboard', (req, res) => {
   res.json({
     summary: mock.dashboardSummary(),
+    atRisk: extra.atRisk(),
     sdwan: mock.sdwanOverlays(),
     vpn: mock.vpnTunnels(),
     ha: mock.haClusters(),
@@ -37,7 +38,26 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
-router.get('/devices',          (req, res) => res.json(mock.deviceFleet()));
+router.get('/dashboard/at-risk', (req, res) => res.json(extra.atRisk()));
+
+router.get('/devices',              (req, res) => res.json(mock.deviceFleet()));
+router.get('/devices/:name/detail', (req, res) => {
+  const detail = extra.deviceDetail(req.params.name);
+  if (!detail) return res.status(404).json({ error: `Device "${req.params.name}" not found.` });
+  res.json(detail);
+});
+
+router.get('/scripts',          (req, res) => res.json({ library: extra.scriptLibrary(), recentRuns: extra.scriptRuns() }));
+router.get('/scripts/library',  (req, res) => res.json(extra.scriptLibrary()));
+router.get('/scripts/runs',     (req, res) => res.json(extra.scriptRuns()));
+router.get('/scripts/library/:id', (req, res) => {
+  const script = extra.scriptLibrary().find((s) => s.id === req.params.id);
+  if (!script) return res.status(404).json({ error: 'Not found' });
+  res.json(script);
+});
+
+router.get('/settings',         (req, res) => res.json(extra.settings()));
+
 router.get('/policy/packages',  (req, res) => res.json(mock.policyPackages()));
 router.get('/policy/heatmap',   (req, res) => res.json(mock.policyHeatmap()));
 router.get('/policy/profiles',  (req, res) => res.json(extra.policyProfiles()));
