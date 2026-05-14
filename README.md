@@ -4,6 +4,10 @@ Read-only public demo of **FMG Console** — a custom FortiManager dashboard wit
 
 Lives at **fmg.tannerharrison.com**.
 
+> **⚠️ Independent project — not a Fortinet GitHub account.**
+>
+> This repository is **not** a Fortinet GitHub account, repository, or product. FMG Demo (and the upstream FMG Console) is built and maintained independently by [Tanner Harrison](https://tannerharrison.com) and is **not** endorsed, sponsored, reviewed, or supported by Fortinet, Inc. Views and code here are the maintainer's own and do not represent any employer. All Fortinet product names, trademarks, and logos are property of Fortinet, Inc. For authoritative FortiManager documentation, see [docs.fortinet.com](https://docs.fortinet.com).
+
 The full project lives in a separate private repo. This demo deployment ships only the UI and a static mock-data backend — no live FortiManager connection, no auth, no user data. Every endpoint returns fixture data. Every mutation is rejected at the middleware layer.
 
 ## Stack
