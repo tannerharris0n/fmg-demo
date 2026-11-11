@@ -32,7 +32,7 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
     >
       <div className="space-y-5">
         <section>
-          <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+          <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
             <meta.Icon className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
             Configuration
           </h3>
@@ -49,18 +49,18 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
           </div>
         </section>
 
-        {isLoading && <div className="text-[12px] text-ink-400">Loading details...</div>}
+        {isLoading && <div className="text-sm text-ink-400">Loading details...</div>}
 
         {data?.signatures && (
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <Bug className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Signatures ({data.signatures.length})
             </h3>
             <ul className="bg-surface-800 rounded-md divide-y divide-surface-600/30">
               {data.signatures.map((s) => (
-                <li key={s.id} className="flex items-center gap-3 px-3 py-2 text-[11.5px]">
-                  <span className="font-mono text-[10.5px] text-ink-400 w-20 shrink-0 tabular-nums">{s.id}</span>
+                <li key={s.id} className="flex items-center gap-3 px-3 py-2 text-sm">
+                  <span className="font-mono text-xs text-ink-400 w-20 shrink-0 tabular-nums">{s.id}</span>
                   <Chip variant={sevTone(s.severity)}>{s.severity}</Chip>
                   <span className="text-ink-50 font-medium min-w-0 flex-1 truncate">{s.name}</span>
                   <Chip variant={actionTone(s.action)}>{s.action}</Chip>
@@ -72,16 +72,16 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
 
         {data?.categories && (
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <Globe className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Categories ({data.categories.length})
             </h3>
             <ul className="bg-surface-800 rounded-md divide-y divide-surface-600/30">
               {data.categories.map((c) => (
-                <li key={c.name} className="flex items-center gap-3 px-3 py-2 text-[12px]">
+                <li key={c.name} className="flex items-center gap-3 px-3 py-2 text-sm">
                   <Chip variant={actionTone(c.action)}>{c.action}</Chip>
                   <span className="text-ink-50 font-medium flex-1">{c.name}</span>
-                  <span className="text-ink-400 text-[11px] tabular-nums">{c.count} sites</span>
+                  <span className="text-ink-400 text-xs tabular-nums">{c.count} sites</span>
                 </li>
               ))}
             </ul>
@@ -90,24 +90,24 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
 
         {data?.protocols && (
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <Shield className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Protocols scanned
             </h3>
             <ul className="bg-surface-800 rounded-md divide-y divide-surface-600/30">
               {data.protocols.map((p) => (
-                <li key={p.name} className="flex items-center gap-3 px-3 py-2 text-[12px]">
+                <li key={p.name} className="flex items-center gap-3 px-3 py-2 text-sm">
                   {p.scan === 'enabled'
                     ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" strokeWidth={1.8} />
                     : <XCircle className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />}
-                  <span className="font-mono text-[11px] font-medium flex-1">{p.name}</span>
-                  <span className="text-ink-400 text-[11px]">{p.scan}</span>
+                  <span className="font-mono text-xs font-medium flex-1">{p.name}</span>
+                  <span className="text-ink-400 text-xs">{p.scan}</span>
                   {p.action !== 'none' && <Chip variant={actionTone(p.action)}>{p.action}</Chip>}
                 </li>
               ))}
             </ul>
             {data.engineStats && (
-              <div className="mt-2 text-[10.5px] text-ink-400">
+              <div className="mt-2 text-xs text-ink-400">
                 Engine: {data.engineStats.vendor} · pattern {data.engineStats.patternVersion}
               </div>
             )}
@@ -116,12 +116,12 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
 
         {data?.exemptCategories && (
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <Lock className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Exempt categories
             </h3>
             <div className="bg-surface-800 rounded-md px-3 py-2">
-              <div className="text-[12px] text-ink-200">These categories bypass SSL inspection:</div>
+              <div className="text-sm text-ink-200">These categories bypass SSL inspection:</div>
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {data.exemptCategories.map((c) => <span key={c} className="code">{c}</span>)}
               </div>
@@ -131,16 +131,16 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
 
         {data?.patterns && (
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <FileKey className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Detection patterns ({data.patterns.length})
             </h3>
             <ul className="bg-surface-800 rounded-md divide-y divide-surface-600/30">
               {data.patterns.map((p) => (
-                <li key={p.name} className="flex items-center gap-3 px-3 py-2 text-[12px]">
+                <li key={p.name} className="flex items-center gap-3 px-3 py-2 text-sm">
                   <Chip variant={actionTone(p.action)}>{p.action}</Chip>
                   <span className="text-ink-50 font-medium flex-1">{p.name}</span>
-                  <span className="text-[10.5px] font-mono text-ink-400">{p.pattern}</span>
+                  <span className="text-xs font-mono text-ink-400">{p.pattern}</span>
                 </li>
               ))}
             </ul>
@@ -153,7 +153,7 @@ export function ProfileDetailDrawer({ profile, type, open, onClose }) {
 
 function Row({ label, value }) {
   return (
-    <div className="flex items-start justify-between gap-3 text-[12px]">
+    <div className="flex items-start justify-between gap-3 text-sm">
       <span className="text-ink-400 shrink-0">{label}</span>
       <span className="text-right">{value}</span>
     </div>

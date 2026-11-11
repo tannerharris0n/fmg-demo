@@ -45,14 +45,14 @@ export function AtRiskPanel({ items: itemsProp }) {
         <header className="flex items-center justify-between px-4 py-3 border-b border-surface-600/60">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            <span className="text-[12.5px] font-medium">All clear</span>
+            <span className="text-base font-medium">All clear</span>
           </div>
-          <span className="text-[11px] text-ink-400 flex items-center gap-1">
+          <span className="text-xs text-ink-400 flex items-center gap-1">
             <Clock className="h-3 w-3" strokeWidth={1.8} />
             updated just now
           </span>
         </header>
-        <div className="p-5 text-center text-[12px] text-ink-400">
+        <div className="p-5 text-center text-sm text-ink-400">
           Nothing needs attention right now.
         </div>
       </section>
@@ -64,10 +64,10 @@ export function AtRiskPanel({ items: itemsProp }) {
       <header className="flex items-center justify-between px-4 py-3 border-b border-surface-600/60">
         <div className="flex items-center gap-2">
           <PulseDot />
-          <span className="text-[12.5px] font-medium">At risk</span>
-          <span className="text-[11px] text-ink-400">{items.length} {items.length === 1 ? 'item needs' : 'items need'} attention</span>
+          <span className="text-base font-semibold">At risk</span>
+          <span className="text-xs text-ink-400">{items.length} {items.length === 1 ? 'item needs' : 'items need'} attention</span>
         </div>
-        <span className="text-[11px] text-ink-400 flex items-center gap-1">
+        <span className="text-xs text-ink-400 flex items-center gap-1">
           <Clock className="h-3 w-3" strokeWidth={1.8} />
           updated just now
         </span>
@@ -77,19 +77,19 @@ export function AtRiskPanel({ items: itemsProp }) {
           <li key={item.id}>
             <Link
               to={item.action.to}
-              className="grid grid-cols-[76px_1fr_auto] gap-3 items-center px-4 py-2.5 border-b border-surface-600/40 last:border-0 hover:bg-surface-800/60 transition group"
+              className="grid grid-cols-[84px_1fr_auto] gap-4 items-center px-4 py-3 border-b border-surface-600/40 last:border-0 hover:bg-surface-800/60 transition group"
             >
               <span className={clsx(
-                'inline-flex items-center justify-center px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider text-[10px] ring-1 whitespace-nowrap',
+                'inline-flex items-center justify-center h-[22px] px-2 rounded-md font-semibold uppercase tracking-[0.08em] text-2xs ring-1 ring-inset whitespace-nowrap',
                 SEV[item.severity] || SEV.low
               )}>
                 {item.severity}
               </span>
               <div className="min-w-0">
-                <div className="text-[12.5px] font-medium text-ink-50 leading-snug truncate">{item.title}</div>
-                <div className="text-[11px] text-ink-400 mt-0.5 truncate">{item.context}</div>
+                <div className="text-base font-medium text-ink-50 truncate">{item.title}</div>
+                <div className="text-xs text-ink-400 mt-0.5 truncate">{item.context}</div>
               </div>
-              <span className="inline-flex items-center gap-1 text-[11px] text-ink-400 group-hover:text-sky-300 transition shrink-0">
+              <span className="inline-flex items-center gap-1 text-xs text-ink-400 group-hover:text-sky-300 transition shrink-0">
                 {item.action.label}
                 <ArrowRight className="h-3 w-3 transition group-hover:translate-x-0.5" strokeWidth={2} />
               </span>

@@ -44,10 +44,10 @@ function HubNode({ hub, onClick }) {
     <g style={{ cursor: 'pointer' }} onClick={onClick}>
       <circle cx={hub.x} cy={hub.y} r={52} fill="#0B2644" stroke={hub.color} strokeWidth={2} />
       <circle cx={hub.x} cy={hub.y} r={58} fill="none" stroke={hub.color} strokeWidth={1} opacity={0.3} />
-      <text x={hub.x} y={hub.y - 3} textAnchor="middle" fontSize="11" fontWeight="700" fill="#F5F7FA" letterSpacing="0.04em" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={hub.x} y={hub.y - 3} textAnchor="middle" fontSize="12" fontWeight="700" fill="#F5F7FA" letterSpacing="0.04em" fontFamily="IBM Plex Sans, sans-serif">
         {hub.label}
       </text>
-      <text x={hub.x} y={hub.y + 11} textAnchor="middle" fontSize="9" fill="#8DB8E6" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={hub.x} y={hub.y + 11} textAnchor="middle" fontSize="10" fill="#8DB8E6" fontFamily="IBM Plex Sans, sans-serif">
         IPsec peer
       </text>
     </g>
@@ -63,10 +63,10 @@ function RemoteNode({ pos, label, remote, status, onClick }) {
         <circle cx={pos.x} cy={pos.y} r={18} fill="none" stroke={s.stroke} strokeWidth={1.5} opacity={0.5} style={{ animation: 'nodePulse 2s ease-in-out infinite' }} />
       )}
       <rect x={pos.x - 52} y={pos.y - 13} width={104} height={26} rx={5} fill={status === 'up' ? '#0A2A1F' : '#2A0E0E'} stroke={s.stroke} strokeWidth={1.6} />
-      <text x={pos.x} y={pos.y + 3.5} textAnchor="middle" fontSize="10" fontWeight="600" fill="#F5F7FA" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={pos.x} y={pos.y + 3.5} textAnchor="middle" fontSize="11" fontWeight="600" fill="#F5F7FA" fontFamily="IBM Plex Sans, sans-serif">
         {label}
       </text>
-      <text x={pos.x} y={pos.y - 18} textAnchor="middle" fontSize="8.5" fill="#5A6169" fontFamily="JetBrains Mono, monospace">
+      <text x={pos.x} y={pos.y - 18} textAnchor="middle" fontSize="9.5" fill="#6B7482" fontFamily="IBM Plex Mono, monospace">
         {remote}
       </text>
     </g>
@@ -110,13 +110,13 @@ function SslVpnBubble({ sessionCount, onClick }) {
   return (
     <g style={{ cursor: 'pointer' }} onClick={onClick}>
       <ellipse cx={400} cy={70} rx={70} ry={28} fill="#1E3A5F" stroke="#378ADD" strokeWidth={1.5} strokeDasharray="3 3" />
-      <text x={400} y={62} textAnchor="middle" fontSize="10" fontWeight="600" fill="#8DB8E6" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={400} y={62} textAnchor="middle" fontSize="11" fontWeight="600" fill="#8DB8E6" fontFamily="IBM Plex Sans, sans-serif">
         SSL-VPN
       </text>
-      <text x={400} y={78} textAnchor="middle" fontSize="14" fontWeight="700" fill="#F5F7FA" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={400} y={78} textAnchor="middle" fontSize="14" fontWeight="700" fill="#F5F7FA" fontFamily="IBM Plex Sans, sans-serif">
         {sessionCount}
       </text>
-      <text x={400} y={90} textAnchor="middle" fontSize="8" fill="#8A919C" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={400} y={90} textAnchor="middle" fontSize="9" fill="#939BA8" fontFamily="IBM Plex Sans, sans-serif">
         active sessions
       </text>
       {/* Line to HQ-Core */}
@@ -129,19 +129,19 @@ function SslVpnBubble({ sessionCount, onClick }) {
 function Legend() {
   return (
     <g transform="translate(20, 545)">
-      <rect x={0} y={0} width={220} height={40} rx={6} fill="rgba(17,20,26,0.85)" stroke="#2A3039" strokeWidth={0.5} />
-      <g transform="translate(10, 13)" fontFamily="Plus Jakarta Sans, sans-serif">
+      <rect x={0} y={0} width={220} height={40} rx={6} fill="rgba(17,20,26,0.85)" stroke="#283040" strokeWidth={0.5} />
+      <g transform="translate(10, 13)" fontFamily="IBM Plex Sans, sans-serif">
         <g>
           <line x1={0} y1={5} x2={18} y2={5} stroke="#10B981" strokeWidth={2} />
-          <text x={22} y={8.5} fontSize="10" fill="#C4CAD3">Tunnel up</text>
+          <text x={22} y={8.5} fontSize="11" fill="#C4CAD3">Tunnel up</text>
         </g>
         <g transform="translate(95, 0)">
           <line x1={0} y1={5} x2={18} y2={5} stroke="#EF4444" strokeWidth={2} strokeDasharray="3 3" />
-          <text x={22} y={8.5} fontSize="10" fill="#C4CAD3">Tunnel down</text>
+          <text x={22} y={8.5} fontSize="11" fill="#C4CAD3">Tunnel down</text>
         </g>
         <g transform="translate(0, 18)">
           <line x1={0} y1={5} x2={18} y2={5} stroke="#378ADD" strokeWidth={1.5} strokeDasharray="2 2" />
-          <text x={22} y={8.5} fontSize="10" fill="#C4CAD3">SSL-VPN session</text>
+          <text x={22} y={8.5} fontSize="11" fill="#C4CAD3">SSL-VPN session</text>
         </g>
       </g>
     </g>
@@ -182,10 +182,10 @@ export function VpnMap({ ipsecTunnels = [], sslSessionCount = 0 }) {
         <rect width="1000" height="600" fill="url(#gridV)" />
 
         {/* Labels */}
-        <text x={220} y={30} textAnchor="middle" fontSize="10" fill="#5A6169" letterSpacing="0.15em" fontFamily="Plus Jakarta Sans, sans-serif">
+        <text x={220} y={30} textAnchor="middle" fontSize="11" fill="#6B7482" letterSpacing="0.15em" fontFamily="IBM Plex Sans, sans-serif">
           HQ GATEWAYS
         </text>
-        <text x={800} y={30} textAnchor="middle" fontSize="10" fill="#5A6169" letterSpacing="0.15em" fontFamily="Plus Jakarta Sans, sans-serif">
+        <text x={800} y={30} textAnchor="middle" fontSize="11" fill="#6B7482" letterSpacing="0.15em" fontFamily="IBM Plex Sans, sans-serif">
           REMOTE PEERS
         </text>
 
@@ -213,21 +213,21 @@ export function VpnMap({ ipsecTunnels = [], sslSessionCount = 0 }) {
       {/* Status pill */}
       <div className="absolute top-2 right-3 flex items-center gap-2">
         <div className="bg-surface-950/70 backdrop-blur ring-1 ring-surface-600/60 rounded-md px-2.5 py-1 flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 text-[10.5px]">
+          <span className="inline-flex items-center gap-1.5 text-xs">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             <span className="text-emerald-300 font-medium tabular-nums">{up} up</span>
           </span>
           {down > 0 && (
             <>
               <span className="text-ink-600">·</span>
-              <span className="inline-flex items-center gap-1.5 text-[10.5px]">
+              <span className="inline-flex items-center gap-1.5 text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse" />
                 <span className="text-rose-300 font-medium tabular-nums">{down} down</span>
               </span>
             </>
           )}
           <span className="text-ink-600">·</span>
-          <span className="inline-flex items-center gap-1.5 text-[10.5px] text-sky-300">
+          <span className="inline-flex items-center gap-1.5 text-xs text-sky-300">
             <Users className="h-2.5 w-2.5" strokeWidth={2} />
             <span className="tabular-nums">{sslSessionCount} users</span>
           </span>

@@ -59,7 +59,7 @@ function EventRow({ event, compact = false }) {
 
   if (compact) {
     return (
-      <div className={clsx('flex items-center gap-1.5 text-[10.5px] py-0.5 px-1.5 rounded', color.bg)}>
+      <div className={clsx('flex items-center gap-1.5 text-xs py-0.5 px-1.5 rounded', color.bg)}>
         <Icon className={clsx('h-2.5 w-2.5 shrink-0', color.text)} strokeWidth={2} />
         <span className="truncate text-ink-200">{event.title}</span>
       </div>
@@ -73,15 +73,15 @@ function EventRow({ event, compact = false }) {
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[12.5px] font-medium text-ink-50">{event.title}</span>
+          <span className="text-base font-medium text-ink-50">{event.title}</span>
           <Chip variant={STATUS_TONE[event.status] || 'neutral'}>{event.status}</Chip>
         </div>
-        <div className="mt-0.5 text-[11px] text-ink-400 flex flex-wrap items-center gap-x-3 gap-y-0.5">
+        <div className="mt-0.5 text-xs text-ink-400 flex flex-wrap items-center gap-x-3 gap-y-0.5">
           <span className="inline-flex items-center gap-1"><Clock className="h-2.5 w-2.5" strokeWidth={1.8} /> {time}{event.window && ` · ${event.window}`}</span>
           <span>{event.target}</span>
           <span className="inline-flex items-center gap-1"><User className="h-2.5 w-2.5" strokeWidth={1.8} /> {event.owner}</span>
         </div>
-        {event.note && <div className="mt-0.5 text-[11px] text-amber-300">{event.note}</div>}
+        {event.note && <div className="mt-0.5 text-xs text-amber-300">{event.note}</div>}
       </div>
     </div>
   );
@@ -108,10 +108,10 @@ function DayCell({ day, events, isToday, selected, onClick }) {
       )}
     >
       <div className="flex items-center justify-between">
-        <span className={clsx('text-[10.5px] uppercase tracking-wider', isToday ? 'text-accent font-semibold' : 'text-ink-400')}>
+        <span className={clsx('text-xs uppercase tracking-wider', isToday ? 'text-accent font-semibold' : 'text-ink-400')}>
           {day.toLocaleDateString(undefined, { weekday: 'short' })}
         </span>
-        <span className={clsx('text-[13px] font-semibold tabular-nums', isToday ? 'text-ink-50' : 'text-ink-200')}>
+        <span className={clsx('text-base font-semibold tabular-nums', isToday ? 'text-ink-50' : 'text-ink-200')}>
           {day.getDate()}
         </span>
       </div>
@@ -123,17 +123,17 @@ function DayCell({ day, events, isToday, selected, onClick }) {
             return (
               <div key={e.id} className="flex items-center gap-1 min-w-0">
                 <span className={clsx('h-1.5 w-1.5 rounded-full shrink-0', c.dot)} />
-                <span className="text-[10px] text-ink-200 truncate">{e.title}</span>
+                <span className="text-2xs text-ink-200 truncate">{e.title}</span>
               </div>
             );
           })}
           {events.length > 3 && (
-            <span className="text-[9.5px] text-ink-400">+{events.length - 3} more</span>
+            <span className="text-2xs text-ink-400">+{events.length - 3} more</span>
           )}
         </div>
       ) : (
         <div className="mt-1.5 flex-1 flex items-center justify-center">
-          <span className="text-[10px] text-ink-600">no changes</span>
+          <span className="text-2xs text-ink-600">no changes</span>
         </div>
       )}
       {hasEvents && (
@@ -186,8 +186,8 @@ export default function CalendarPage() {
   const selectedDay = days.find((d) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}` === selectedDayKey) || today;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Upcoming scheduled"  value={upcoming.length}    icon={CalendarIcon} iconTone="info"    delta="next 7 days" deltaTone="muted" />
         <KpiCard label="Warnings"            value={warnings.length}    icon={AlertCircle}  iconTone={warnings.length ? 'warning' : 'muted'} delta="certs expiring soon" deltaTone="warning" />
         <KpiCard label="Last 7 day success"  value={totalSuccess}        icon={Rocket}       iconTone="success" />
@@ -214,7 +214,7 @@ export default function CalendarPage() {
 
       <Tile title={`${dayLabel(selectedDay)} · ${selectedEvents.length} change${selectedEvents.length === 1 ? '' : 's'}`} icon={Clock}>
         {selectedEvents.length === 0 ? (
-          <div className="py-8 text-center text-[12px] text-ink-400">No changes scheduled for this day</div>
+          <div className="py-8 text-center text-sm text-ink-400">No changes scheduled for this day</div>
         ) : (
           <div>
             {selectedEvents.map((e) => <EventRow key={e.id} event={e} />)}

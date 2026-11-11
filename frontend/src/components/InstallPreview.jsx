@@ -20,8 +20,8 @@ function ChangeRow({ change }) {
         <Icon className="h-3 w-3" strokeWidth={2} />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="text-[10.5px] uppercase tracking-wide text-ink-400">{change.section}</div>
-        <div className="text-[12px] text-ink-50 font-mono leading-snug mt-0.5">{change.detail}</div>
+        <div className="text-xs uppercase tracking-wide text-ink-400">{change.section}</div>
+        <div className="text-sm text-ink-50 font-mono leading-snug mt-0.5">{change.detail}</div>
       </div>
     </li>
   );
@@ -32,13 +32,13 @@ function TargetRow({ target }) {
     target.status === 'warning' ? <AlertTriangle className="h-3.5 w-3.5 text-amber-400" strokeWidth={1.8} /> :
     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" strokeWidth={1.8} />;
   return (
-    <li className="flex items-center justify-between py-1.5 text-[12px]">
+    <li className="flex items-center justify-between py-1.5 text-sm">
       <span className="flex items-center gap-2">
         {statusIcon}
         <span className="text-ink-50 font-medium">{target.device}</span>
-        {target.note && <span className="text-[11px] text-amber-300">{target.note}</span>}
+        {target.note && <span className="text-xs text-amber-300">{target.note}</span>}
       </span>
-      <span className="flex gap-2 text-[11px] tabular-nums">
+      <span className="flex gap-2 text-xs tabular-nums">
         <span className="text-emerald-400">+{target.added}</span>
         <span className="text-amber-400">~{target.modified}</span>
         <span className="text-rose-400">−{target.removed}</span>
@@ -85,7 +85,7 @@ export function InstallPreview({ packageId, open, onClose, onInstalled }) {
       }
     >
       {isLoading && (
-        <div className="text-[12px] text-ink-400 animate-pulse">Computing changes...</div>
+        <div className="text-sm text-ink-400 animate-pulse">Computing changes...</div>
       )}
 
       {data && (
@@ -99,7 +99,7 @@ export function InstallPreview({ packageId, open, onClose, onInstalled }) {
 
           <section>
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-[12px] font-semibold text-ink-50">Target devices</h3>
+              <h3 className="text-sm font-semibold text-ink-50">Target devices</h3>
               <Badge variant="neutral">{data.targets.length}</Badge>
             </div>
             <ul className="bg-surface-800 rounded-md px-3 divide-y divide-surface-600/40">
@@ -109,7 +109,7 @@ export function InstallPreview({ packageId, open, onClose, onInstalled }) {
 
           <section>
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-[12px] font-semibold text-ink-50">Changes</h3>
+              <h3 className="text-sm font-semibold text-ink-50">Changes</h3>
               <Badge variant="neutral">{data.changes.length}</Badge>
             </div>
             <ul className="bg-surface-800 rounded-md px-3">
@@ -118,7 +118,7 @@ export function InstallPreview({ packageId, open, onClose, onInstalled }) {
           </section>
 
           {execute.error && (
-            <div className="rounded-md bg-rose-500/10 border border-rose-500/30 px-3 py-2 text-[12px] text-rose-300">
+            <div className="rounded-md bg-rose-500/10 border border-rose-500/30 px-3 py-2 text-sm text-rose-300">
               Install failed: {execute.error.message}
             </div>
           )}
@@ -131,7 +131,7 @@ export function InstallPreview({ packageId, open, onClose, onInstalled }) {
 function Stat({ label, value, tone }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2">
-      <div className="text-[10.5px] text-ink-400">{label}</div>
+      <div className="text-xs text-ink-400">{label}</div>
       <div className={clsx('text-[16px] font-semibold tabular-nums leading-tight mt-0.5', tone || 'text-ink-50')}>
         {value}
       </div>

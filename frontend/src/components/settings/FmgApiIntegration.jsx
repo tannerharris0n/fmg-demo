@@ -66,11 +66,11 @@ function CodeBlock({ code, label }) {
       <div className="flex items-center justify-between px-3 py-1.5 border-b border-surface-600/60 bg-surface-900">
         <div className="flex items-center gap-2">
           <Terminal className="h-3 w-3 text-ink-400" strokeWidth={1.7} />
-          <span className="text-[10.5px] text-ink-400 uppercase tracking-wider">{label}</span>
+          <span className="text-xs text-ink-400 uppercase tracking-wider">{label}</span>
         </div>
         <button
           onClick={onCopy}
-          className="text-[11px] text-ink-400 hover:text-ink-200 transition inline-flex items-center gap-1"
+          className="text-xs text-ink-400 hover:text-ink-200 transition inline-flex items-center gap-1"
         >
           {copied ? (
             <>
@@ -85,7 +85,7 @@ function CodeBlock({ code, label }) {
           )}
         </button>
       </div>
-      <pre className="text-[11px] font-mono leading-relaxed p-3 text-ink-200 overflow-x-auto whitespace-pre">
+      <pre className="text-xs font-mono leading-relaxed p-3 text-ink-200 overflow-x-auto whitespace-pre">
         {code}
       </pre>
     </div>
@@ -95,12 +95,12 @@ function CodeBlock({ code, label }) {
 function Step({ n, title, children }) {
   return (
     <div className="flex gap-3">
-      <div className="shrink-0 h-6 w-6 rounded-full bg-accent-soft text-sky-200 text-[11px] font-semibold grid place-items-center mt-0.5">
+      <div className="shrink-0 h-6 w-6 rounded-full bg-accent-soft text-sky-200 text-xs font-semibold grid place-items-center mt-0.5">
         {n}
       </div>
       <div className="flex-1 min-w-0">
-        <h4 className="text-[13px] font-semibold text-ink-50 mb-1">{title}</h4>
-        <div className="text-[12px] text-ink-200 leading-relaxed space-y-2">{children}</div>
+        <h4 className="text-base font-semibold text-ink-50 mb-1">{title}</h4>
+        <div className="text-sm text-ink-200 leading-relaxed space-y-2">{children}</div>
       </div>
     </div>
   );
@@ -111,7 +111,7 @@ function TabButton({ active, onClick, children }) {
     <button
       onClick={onClick}
       className={clsx(
-        'px-3 py-1 text-[11.5px] font-medium rounded transition',
+        'px-3 py-1 text-sm font-medium rounded transition',
         active ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200'
       )}
     >
@@ -139,13 +139,13 @@ export function FmgApiIntegration() {
     >
       {tab === 'overview' && (
         <div className="space-y-4">
-          <div className="rounded-md bg-sky-500/5 border border-sky-500/20 p-3 text-[12px] text-ink-200 leading-relaxed">
+          <div className="rounded-md bg-sky-500/5 border border-sky-500/20 p-3 text-sm text-ink-200 leading-relaxed">
             <div className="flex items-start gap-2">
               <Shield className="h-3.5 w-3.5 text-sky-400 shrink-0 mt-0.5" strokeWidth={1.8} />
               <div>
                 You are currently running in <Badge variant="warning">demo mode</Badge> with fixture data.
                 To connect to a live FortiManager, flip <code className="code">USE_MOCK_DATA=false</code> in your Railway environment
-                and provide the FMG credentials below. Mutations are blocked in demo.
+                and provide the FMG credentials below. Changes are disabled in the demo.
               </div>
             </div>
           </div>
@@ -154,9 +154,9 @@ export function FmgApiIntegration() {
             <div className="bg-surface-800 rounded-md p-3">
               <div className="flex items-center gap-2 mb-2">
                 <Server className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
-                <span className="text-[12px] font-semibold">How the backend connects</span>
+                <span className="text-sm font-semibold">How the backend connects</span>
               </div>
-              <p className="text-[11.5px] text-ink-200 leading-relaxed">
+              <p className="text-sm text-ink-200 leading-relaxed">
                 This console proxies requests to FMG's JSON-RPC API at <code className="code">/jsonrpc</code>. It
                 handles session lifecycle (login, keep-alive, logout) server-side and never exposes credentials
                 to the browser.
@@ -165,9 +165,9 @@ export function FmgApiIntegration() {
             <div className="bg-surface-800 rounded-md p-3">
               <div className="flex items-center gap-2 mb-2">
                 <Key className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
-                <span className="text-[12px] font-semibold">Authentication model</span>
+                <span className="text-sm font-semibold">Authentication model</span>
               </div>
-              <p className="text-[11.5px] text-ink-200 leading-relaxed">
+              <p className="text-sm text-ink-200 leading-relaxed">
                 FMG session IDs from <code className="code">/sys/login/user</code> are cached with transparent
                 re-auth on 401. User-facing access is gated by Supabase (or JWT) — so console users aren't
                 the same as FMG admins.
@@ -178,7 +178,7 @@ export function FmgApiIntegration() {
           <a
             href="https://docs.fortinet.com/document/fortimanager/8.0.0/api-best-practices"
             target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-[12px] text-sky-300 hover:text-sky-200 transition"
+            className="inline-flex items-center gap-1.5 text-sm text-sky-300 hover:text-sky-200 transition"
           >
             <ExternalLink className="h-3 w-3" strokeWidth={1.8} />
             Fortinet API best practices reference
@@ -190,7 +190,7 @@ export function FmgApiIntegration() {
         <div className="space-y-5">
           <Step n={1} title="Create an API user in FortiManager">
             <p>In FMG: <span className="code">System Settings → Admin → Administrators → + Create New</span></p>
-            <ul className="list-disc list-outside ml-4 space-y-0.5 text-ink-400 text-[11.5px]">
+            <ul className="list-disc list-outside ml-4 space-y-0.5 text-ink-400 text-sm">
               <li>User name: <span className="code">api-readonly</span></li>
               <li>Type: <span className="code">Local</span> (or <span className="code">RADIUS</span> if integrated)</li>
               <li>Admin profile: custom read-only (see Permissions tab)</li>
@@ -202,7 +202,7 @@ export function FmgApiIntegration() {
           <Step n={2} title="Set Railway environment variables">
             <p>In your Railway service → <span className="code">Variables</span>, paste the template below. Replace placeholders with your values.</p>
             <CodeBlock code={ENV_TEMPLATE} label=".env template" />
-            <p className="text-[11px] text-ink-400 leading-relaxed">
+            <p className="text-xs text-ink-400 leading-relaxed">
               <AlertCircle className="h-3 w-3 inline-block mr-1 -mt-0.5 text-amber-400" strokeWidth={1.8} />
               Railway encrypts variables at rest. Never commit <span className="code">FMG_PASSWORD</span> to git.
               Rotate the password if the repo was ever public.
@@ -227,27 +227,27 @@ export function FmgApiIntegration() {
 
       {tab === 'curl' && (
         <div className="space-y-4">
-          <p className="text-[12px] text-ink-200 leading-relaxed">
+          <p className="text-sm text-ink-200 leading-relaxed">
             FMG's JSON-RPC API is a single endpoint. All calls are POST, all bodies include an <span className="code">id</span> for
             correlation, and any call after the initial login must include the <span className="code">session</span> token.
           </p>
 
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-ink-400 mb-2">1. Log in, capture session</div>
+            <div className="text-xs uppercase tracking-widest text-ink-400 mb-2">1. Log in, capture session</div>
             <CodeBlock code={CURL_LOGIN} label="login" />
           </div>
 
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-ink-400 mb-2">2. Make an API call</div>
+            <div className="text-xs uppercase tracking-widest text-ink-400 mb-2">2. Make an API call</div>
             <CodeBlock code={CURL_LIST} label="list devices" />
           </div>
 
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-ink-400 mb-2">3. Log out when done</div>
+            <div className="text-xs uppercase tracking-widest text-ink-400 mb-2">3. Log out when done</div>
             <CodeBlock code={CURL_LOGOUT} label="logout" />
           </div>
 
-          <div className="rounded-md bg-amber-500/5 border border-amber-500/20 p-3 text-[11.5px] text-amber-200 leading-relaxed">
+          <div className="rounded-md bg-amber-500/5 border border-amber-500/20 p-3 text-sm text-amber-200 leading-relaxed">
             <AlertCircle className="h-3.5 w-3.5 inline-block mr-1 -mt-0.5" strokeWidth={1.8} />
             FMG session timeout defaults to 5 minutes of idle. The console's <span className="code">fmgClient.js</span> layer
             handles transparent re-auth — if you see repeated logins in audit, that's normal under low traffic.
@@ -257,14 +257,14 @@ export function FmgApiIntegration() {
 
       {tab === 'perms' && (
         <div className="space-y-4">
-          <p className="text-[12px] text-ink-200 leading-relaxed">
+          <p className="text-sm text-ink-200 leading-relaxed">
             The console only needs read access to most objects. Create a custom admin profile in FMG with the
             minimum set below — don't use <span className="code">Super_User</span>.
           </p>
 
           <div className="bg-surface-800 rounded-md overflow-hidden">
-            <table className="w-full text-left text-[11.5px]">
-              <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+            <table className="w-full text-left text-sm">
+              <thead className="text-ink-400 text-xs border-b border-surface-600/60">
                 <tr>
                   <th className="py-2 px-3 font-medium">FMG object</th>
                   <th className="py-2 px-3 font-medium">Required access</th>
@@ -272,18 +272,18 @@ export function FmgApiIntegration() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-800">
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">Device Manager</td>            <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">Fleet, HA, drift</td></tr>
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">Policy &amp; Objects</td>       <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">Packages, rules, objects, profiles</td></tr>
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">ADOM Switch</td>                <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">Multi-ADOM support</td></tr>
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">System Settings</td>            <td className="py-1.5 px-3"><Badge variant="neutral">None</Badge></td>      <td className="py-1.5 px-3 text-ink-400">Not used</td></tr>
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">Install Wizard</td>             <td className="py-1.5 px-3"><Badge variant="warning">Read-Write</Badge></td> <td className="py-1.5 px-3 text-ink-400">Only if you enable push/install from console</td></tr>
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">Script</td>                     <td className="py-1.5 px-3"><Badge variant="warning">Read-Write</Badge></td> <td className="py-1.5 px-3 text-ink-400">Only if you enable script execution</td></tr>
-                <tr><td className="py-1.5 px-3 font-mono text-[10.5px]">FortiGuard</td>                 <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">CVE / IPS signature metadata</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">Device Manager</td>            <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">Fleet, HA, drift</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">Policy &amp; Objects</td>       <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">Packages, rules, objects, profiles</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">ADOM Switch</td>                <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">Multi-ADOM support</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">System Settings</td>            <td className="py-1.5 px-3"><Badge variant="neutral">None</Badge></td>      <td className="py-1.5 px-3 text-ink-400">Not used</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">Install Wizard</td>             <td className="py-1.5 px-3"><Badge variant="warning">Read-Write</Badge></td> <td className="py-1.5 px-3 text-ink-400">Only if you enable push/install from console</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">Script</td>                     <td className="py-1.5 px-3"><Badge variant="warning">Read-Write</Badge></td> <td className="py-1.5 px-3 text-ink-400">Only if you enable script execution</td></tr>
+                <tr><td className="py-1.5 px-3 font-mono text-xs">FortiGuard</td>                 <td className="py-1.5 px-3"><Badge variant="info">Read</Badge></td>         <td className="py-1.5 px-3 text-ink-400">CVE / IPS signature metadata</td></tr>
               </tbody>
             </table>
           </div>
 
-          <div className="rounded-md bg-emerald-500/5 border border-emerald-500/20 p-3 text-[11.5px] text-ink-200 leading-relaxed">
+          <div className="rounded-md bg-emerald-500/5 border border-emerald-500/20 p-3 text-sm text-ink-200 leading-relaxed">
             <Shield className="h-3.5 w-3.5 inline-block mr-1 -mt-0.5 text-emerald-400" strokeWidth={1.8} />
             <span className="font-medium text-emerald-300">Read-only recommended.</span> Keep the API profile read-only and use
             a separate elevated user for install/push operations triggered by humans. This way a compromised

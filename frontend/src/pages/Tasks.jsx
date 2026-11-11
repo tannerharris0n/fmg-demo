@@ -55,8 +55,8 @@ function TaskRow({ task }) {
         <div className="flex items-start gap-2.5 min-w-0">
           <Icon className={clsx('h-4 w-4 mt-0.5 shrink-0', meta.iconClass)} strokeWidth={1.7} />
           <div className="min-w-0">
-            <div className="text-[12.5px] font-medium text-ink-50 truncate">{task.name}</div>
-            <div className="text-[11px] text-ink-400 flex items-center gap-2 flex-wrap mt-0.5">
+            <div className="text-base font-medium text-ink-50 truncate">{task.name}</div>
+            <div className="text-xs text-ink-400 flex items-center gap-2 flex-wrap mt-0.5">
               <span className={TYPE_COLOR[task.type] || 'text-ink-400'}>{task.type}</span>
               <span>·</span>
               <span>{task.targets} target{task.targets === 1 ? '' : 's'}</span>
@@ -68,13 +68,13 @@ function TaskRow({ task }) {
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[11px] tabular-nums text-ink-200">{task.percent}%</span>
+          <span className="text-xs tabular-nums text-ink-200">{task.percent}%</span>
           <Badge variant={meta.tone}>{meta.label}</Badge>
         </div>
       </div>
       <ProgressBar percent={task.percent} state={task.state} />
       {task.error && (
-        <div className="text-[11px] text-rose-300 mt-2">
+        <div className="text-xs text-rose-300 mt-2">
           {task.error}
         </div>
       )}
@@ -94,7 +94,7 @@ export default function Tasks() {
   }
 
   return (
-    <div className="space-y-3 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       <Tile
         title="Running"
         subtitle={`${running.length} active`}

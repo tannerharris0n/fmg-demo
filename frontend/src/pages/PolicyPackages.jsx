@@ -33,7 +33,7 @@ export default function PolicyPackages() {
   }
 
   return (
-    <div className="space-y-3 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       <Tile
         title="Policy packages"
         subtitle={`${data.length} packages · click any package to inspect rules and devices`}
@@ -52,11 +52,11 @@ export default function PolicyPackages() {
                     className="min-w-0 flex-1 text-left hover:bg-surface-800/40 -mx-2 px-2 py-1 rounded-md transition"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-[13px] font-semibold text-ink-50 group-hover:text-sky-300 transition">{pkg.name}</span>
+                      <span className="text-base font-semibold text-ink-50 group-hover:text-sky-300 transition">{pkg.name}</span>
                       {stale && <Badge variant="warning">pending install</Badge>}
                       <ArrowRight className="h-3 w-3 text-ink-400 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition" strokeWidth={2} />
                     </div>
-                    <div className="mt-1 text-[11px] text-ink-400 flex flex-wrap items-center gap-x-3 gap-y-0.5">
+                    <div className="mt-1 text-xs text-ink-400 flex flex-wrap items-center gap-x-3 gap-y-0.5">
                       <span className="tabular-nums">{pkg.rules} rules</span>
                       <span>·</span>
                       <span>{pkg.devices.length} device{pkg.devices.length === 1 ? '' : 's'}</span>
@@ -75,7 +75,7 @@ export default function PolicyPackages() {
                     </div>
                   </button>
                   <div className="flex gap-2 shrink-0 mt-0.5">
-                    <Button size="sm" variant="ghost" icon={GitCompare} onClick={() => toast.info('Compare is read-only in demo', { detail: `Would diff ${pkg.name} against another package` })}>
+                    <Button size="sm" variant="ghost" icon={GitCompare} onClick={() => toast.info('Package compare is disabled in this read-only demo', { detail: `Would diff ${pkg.name} against another package` })}>
                       Compare
                     </Button>
                     <Button

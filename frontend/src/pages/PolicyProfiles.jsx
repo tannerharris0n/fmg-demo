@@ -34,22 +34,22 @@ function ProfileList({ items, tab, query, onSelect }) {
         <li key={p.name}>
           <button
             onClick={() => onSelect(p)}
-            className="w-full text-left py-3 first:pt-0 last:pb-0 hover:bg-surface-800/40 -mx-2 px-2 rounded-md transition group"
+            className="w-full text-left py-3 hover:bg-surface-800/40 -mx-2 px-2 rounded-md transition group"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[13px] font-semibold text-ink-50 group-hover:text-sky-300 transition">{p.name}</span>
+                  <span className="text-base font-semibold text-ink-50 group-hover:text-sky-300 transition">{p.name}</span>
                   {p.action && <Badge variant={actionTone(p.action)}>{p.action}</Badge>}
                   {p.mode && <Badge variant="info">{p.mode}</Badge>}
                   <Badge variant="neutral">{p.usedBy} policies</Badge>
                   <ArrowRight className="h-3 w-3 text-ink-400 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition" strokeWidth={2} />
                 </div>
-                {p.note && <div className="text-[11.5px] text-ink-400 mt-1">{p.note}</div>}
+                {p.note && <div className="text-sm text-ink-400 mt-1">{p.note}</div>}
 
-                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px]">
+                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
                   {p.engine    && <Field label="Engine"     value={p.engine} />}
-                  {p.signatures && <Field label="Sigs"       value={p.signatures} mono />}
+                  {p.signatures && <Field label="Signatures"       value={p.signatures} mono />}
                   {p.categories && <Field label="Categories" value={p.categories} mono />}
                   {p.scope     && <Field label="Scope"      value={p.scope} />}
                   {p.cert      && <Field label="Cert"       value={p.cert} mono />}
@@ -61,13 +61,13 @@ function ProfileList({ items, tab, query, onSelect }) {
                   </div>
                 )}
                 {p.blocked && p.blocked.length > 0 && (
-                  <div className="mt-1.5 text-[11px]">
+                  <div className="mt-1.5 text-xs">
                     <span className="text-rose-400 font-medium">Blocked:</span>{' '}
                     <span className="text-ink-200">{p.blocked.join(', ')}</span>
                   </div>
                 )}
                 {p.exemptions && p.exemptions.length > 0 && (
-                  <div className="mt-1.5 text-[11px]">
+                  <div className="mt-1.5 text-xs">
                     <span className="text-emerald-400 font-medium">Exempt:</span>{' '}
                     <span className="text-ink-200">{p.exemptions.join(', ')}</span>
                   </div>
@@ -89,8 +89,8 @@ function ProfileList({ items, tab, query, onSelect }) {
 function Field({ label, value, mono }) {
   return (
     <span>
-      <span className="text-ink-600 uppercase tracking-wider text-[10px] mr-1">{label}</span>
-      <span className={clsx('text-ink-200', mono && 'font-mono text-[10.5px]')}>{value}</span>
+      <span className="text-ink-600 uppercase tracking-wider text-2xs mr-1">{label}</span>
+      <span className={clsx('text-ink-200', mono && 'font-mono text-xs')}>{value}</span>
     </span>
   );
 }
@@ -111,8 +111,8 @@ export default function PolicyProfiles() {
   const totalUsedBy = Object.values(data).flat().reduce((a, p) => a + (p.usedBy || 0), 0);
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Profiles"         value={totalProfiles}        icon={ShieldCheck} iconTone="info" />
         <KpiCard label="Profile types"    value={TABS.length}          icon={Layers}      iconTone="muted" />
         <KpiCard label="Policies using"   value={totalUsedBy}          icon={FileKey}     iconTone="muted"  delta="across all packages" deltaTone="muted" />
@@ -131,7 +131,7 @@ export default function PolicyProfiles() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
-                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-[11.5px] outline-none focus:border-accent w-40"
+                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-sm outline-none focus:border-accent w-40"
               />
             </div>
             <div className="inline-flex bg-surface-800 rounded-md p-0.5 gap-0.5 ring-1 ring-surface-600/60 flex-wrap">
@@ -144,7 +144,7 @@ export default function PolicyProfiles() {
                     key={t.id}
                     onClick={() => setTab(t.id)}
                     className={clsx(
-                      'flex items-center gap-1 text-[11px] px-2 py-1 rounded font-medium transition',
+                      'flex items-center gap-1 text-xs px-2 py-1 rounded font-medium transition',
                       active ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200'
                     )}
                   >

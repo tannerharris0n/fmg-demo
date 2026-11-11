@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   LayoutGrid,
@@ -10,18 +10,16 @@ import {
   Zap,
   Code2,
   Settings,
-  ChevronDown,
   ChevronRight,
   Cloud,
-  Network,
-  Wifi,
   Calendar,
 } from 'lucide-react';
 import { StatusDot } from '../common/StatusDot';
 
 const NAV = [
   { kind: 'item', to: '/', label: 'Dashboard', icon: LayoutGrid, end: true },
-  { kind: 'group', label: 'Fabric' },
+
+  { kind: 'group', label: 'Infrastructure' },
   {
     kind: 'item', to: '/devices', label: 'Devices', icon: Server, badge: '47',
     children: [
@@ -32,130 +30,193 @@ const NAV = [
     ],
   },
   {
-    kind: 'item', to: '/fabric', label: 'Network', icon: Share2,
+    kind: 'item', to: '/fabric/sdwan', base: '/fabric', label: 'Network', icon: Share2,
     children: [
       { to: '/fabric/sdwan', label: 'SD-WAN' },
-      { to: '/fabric/vpn',   label: 'VPN', badge: '34', badgeTone: 'success' },
+      { to: '/fabric/vpn',   label: 'VPN tunnels', badge: '34', badgeTone: 'success' },
       { to: '/fabric/ha',    label: 'HA clusters' },
       { to: '/switches',     label: 'Switches' },
       { to: '/aps',          label: 'Access points' },
     ],
   },
   { kind: 'item', to: '/sase', label: 'SASE', icon: Cloud, badge: '342', badgeTone: 'info' },
-  { kind: 'group', label: 'Policy' },
+
+  { kind: 'group', label: 'Policy & security' },
   {
-    kind: 'item', to: '/policy', label: 'Policy', icon: FileText, badge: '18',
+    kind: 'item', to: '/policy/packages', base: '/policy', label: 'Policy', icon: FileText, badge: '11', badgeTone: 'warning',
     children: [
       { to: '/policy/packages', label: 'Packages' },
-      { to: '/policy/objects', label: 'Objects' },
+      { to: '/policy/objects',  label: 'Objects' },
       { to: '/policy/profiles', label: 'Profiles' },
-      { to: '/policy/analyzer', label: 'Analyzer', badge: '18', badgeTone: 'warning' },
+      { to: '/policy/analyzer', label: 'Analyzer', badge: '11', badgeTone: 'warning' },
     ],
   },
-  { kind: 'group', label: 'Security' },
   {
-    kind: 'item', to: '/security', label: 'Security', icon: ShieldCheck,
+    kind: 'item', to: '/security/threats', base: '/security', label: 'Security', icon: ShieldCheck, badge: '9', badgeTone: 'danger',
     children: [
       { to: '/security/threats', label: 'Threats' },
-      { to: '/security/drift', label: 'Drift', badge: '2', badgeTone: 'danger' },
-      { to: '/security/audit', label: 'Admin audit' },
-      { to: '/security/cve', label: 'CVE watch', badge: '3', badgeTone: 'warning' },
+      { to: '/security/drift',   label: 'Config drift', badge: '4', badgeTone: 'danger' },
+      { to: '/security/audit',   label: 'Admin audit' },
+      { to: '/security/cve',     label: 'CVE watch', badge: '5', badgeTone: 'warning' },
     ],
   },
-  { kind: 'group', label: 'Ops' },
-  { kind: 'item', to: '/calendar', label: 'Calendar', icon: Calendar, badge: '8', badgeTone: 'info' },
-  { kind: 'item', to: '/tasks',    label: 'Tasks',    icon: Zap,       badge: '1', badgeTone: 'info' },
+
+  { kind: 'group', label: 'Operations' },
+  { kind: 'item', to: '/calendar', label: 'Change calendar', icon: Calendar, badge: '8', badgeTone: 'info' },
+  { kind: 'item', to: '/tasks',    label: 'Tasks',    icon: Zap,   badge: '1', badgeTone: 'info' },
   { kind: 'item', to: '/scripts',  label: 'Scripts',  icon: Code2 },
   { kind: 'item', to: '/settings', label: 'Settings', icon: Settings },
 ];
 
-const badgeClass = (tone) => {
-  switch (tone) {
-    case 'warning': return 'text-amber-300';
-    case 'danger':  return 'text-rose-300';
-    case 'success': return 'text-emerald-300';
-    case 'info':    return 'text-sky-300';
-    default:        return 'text-ink-400';
-  }
+const BADGE = {
+  warning: 'bg-amber-400/10 text-amber-300',
+  danger:  'bg-rose-500/15 text-rose-300',
+  success: 'bg-emerald-500/10 text-emerald-300',
+  info:    'bg-sky-400/10 text-sky-300',
+  neutral: 'bg-surface-700 text-ink-400',
 };
 
+function CountBadge({ value, tone = 'neutral' }) {
+  return (
+    <span className={clsx(
+      'min-w-[22px] px-1.5 h-[18px] inline-flex items-center justify-center rounded-full text-2xs font-semibold tabular-nums',
+      BADGE[tone] || BADGE.neutral,
+    )}>
+      {value}
+    </span>
+  );
+}
+
+/** Does `to` (which may carry a query string) match the current location? */
+function matches(to, location) {
+  const [path, query = ''] = to.split('?');
+  if (location.pathname !== path) return false;
+  const want = new URLSearchParams(query).get('view') || '';
+  const have = new URLSearchParams(location.search).get('view') || '';
+  return want === have;
+}
+
+function childPaths(item) {
+  return [item.to, ...(item.base ? [item.base] : []), ...(item.children || []).map((c) => c.to.split('?')[0])];
+}
+
 function ItemRow({ item }) {
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
   const Icon = item.icon;
   const hasChildren = item.children?.length > 0;
 
+  const sectionActive = hasChildren
+    ? childPaths(item).some((p) => location.pathname === p || location.pathname.startsWith(p + '/'))
+    : false;
+
+  const [open, setOpen] = useState(sectionActive);
+  // Keep the active section expanded as the route changes.
+  useEffect(() => { if (sectionActive) setOpen(true); }, [sectionActive]);
+
   return (
     <div>
-      <NavLink
-        to={item.to}
-        end={item.end}
-        onClick={() => {
-          if (hasChildren) setOpen((o) => !o);
-        }}
-        className={({ isActive }) => clsx(
-          'group flex items-center gap-2 px-2 py-1.5 rounded-md text-[12px] transition-colors',
-          isActive
-            ? 'bg-surface-700 text-ink-50 font-medium'
-            : 'text-ink-200 hover:bg-surface-800 hover:text-ink-50'
-        )}
-      >
-        {Icon && <Icon className="h-3.5 w-3.5 shrink-0 text-ink-400 group-hover:text-ink-200" strokeWidth={1.7} />}
-        <span className="flex-1 truncate">{item.label}</span>
-        {item.badge && (
-          <span className={clsx('text-[10px] font-medium', badgeClass(item.badgeTone))}>
-            {item.badge}
-          </span>
-        )}
+      <div className="relative group/row">
+        <NavLink
+          to={item.to}
+          end={item.end}
+          className={({ isActive }) => {
+            const active = isActive || sectionActive;
+            return clsx(
+              'relative flex items-center gap-2.5 pl-2.5 pr-2 h-8 rounded-md text-sm transition-colors',
+              active
+                ? 'bg-surface-700/70 text-ink-50 font-medium'
+                : 'text-ink-200 hover:bg-surface-800 hover:text-ink-50',
+              hasChildren && 'pr-8',
+            );
+          }}
+        >
+          {({ isActive }) => (
+            <>
+              {(isActive || sectionActive) && (
+                <span className="absolute -left-2 top-1.5 bottom-1.5 w-[3px] rounded-r bg-accent" />
+              )}
+              {Icon && (
+                <Icon
+                  className={clsx('h-4 w-4 shrink-0', (isActive || sectionActive) ? 'text-sky-300' : 'text-ink-400')}
+                  strokeWidth={1.7}
+                />
+              )}
+              <span className="flex-1 truncate">{item.label}</span>
+              {item.badge && <CountBadge value={item.badge} tone={item.badgeTone} />}
+            </>
+          )}
+        </NavLink>
         {hasChildren && (
-          open
-            ? <ChevronDown className="h-3 w-3 text-ink-400" strokeWidth={2} />
-            : <ChevronRight className="h-3 w-3 text-ink-400" strokeWidth={2} />
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? `Collapse ${item.label}` : `Expand ${item.label}`}
+            aria-expanded={open}
+            className="absolute right-1 top-1 h-6 w-6 grid place-items-center rounded text-ink-600 hover:text-ink-200 hover:bg-surface-700 transition"
+          >
+            <ChevronRight className={clsx('h-3.5 w-3.5 transition-transform', open && 'rotate-90')} strokeWidth={2} />
+          </button>
         )}
-      </NavLink>
+      </div>
 
       {hasChildren && open && (
-        <div className="ml-6 mt-0.5 space-y-px animate-fade-in">
-          {item.children.map((c) => (
-            <NavLink
-              key={c.to + c.label}
-              to={c.to}
-              className={({ isActive }) => clsx(
-                'flex items-center justify-between px-2 py-1 rounded text-[11.5px] transition-colors',
-                isActive
-                  ? 'text-ink-50 bg-surface-800'
-                  : 'text-ink-400 hover:text-ink-200 hover:bg-surface-800'
-              )}
-            >
-              <span className="truncate">{c.label}</span>
-              {c.badge && (
-                <span className={clsx('text-[10px] font-medium', badgeClass(c.badgeTone))}>
-                  {c.badge}
-                </span>
-              )}
-            </NavLink>
-          ))}
+        <div className="ml-[17px] pl-3 mt-0.5 mb-1 border-l border-surface-600/70 space-y-px animate-fade-in">
+          {item.children.map((c) => {
+            const active = matches(c.to, location);
+            return (
+              <Link
+                key={c.to + c.label}
+                to={c.to}
+                aria-current={active ? 'page' : undefined}
+                className={clsx(
+                  'flex items-center justify-between gap-2 px-2 h-7 rounded text-sm transition-colors',
+                  active
+                    ? 'text-ink-50 bg-surface-800 font-medium'
+                    : 'text-ink-400 hover:text-ink-50 hover:bg-surface-800/70'
+                )}
+              >
+                <span className="truncate">{c.label}</span>
+                {c.badge && <CountBadge value={c.badge} tone={c.badgeTone} />}
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
   );
 }
 
+function BrandMark() {
+  return (
+    <div className="relative h-7 w-7 rounded-lg bg-gradient-to-br from-sky-400 to-accent grid place-items-center shadow-[0_0_0_1px_rgba(255,255,255,0.08)_inset,0_4px_12px_-4px_rgba(61,142,240,0.6)]">
+      <svg viewBox="0 0 16 16" className="h-4 w-4 text-white" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+        <circle cx="8" cy="8" r="1.6" fill="currentColor" stroke="none" />
+        <circle cx="3" cy="3.5" r="1.1" />
+        <circle cx="13" cy="3.5" r="1.1" />
+        <circle cx="3" cy="12.5" r="1.1" />
+        <circle cx="13" cy="12.5" r="1.1" />
+        <path d="M4 4.4 6.8 7M12 4.4 9.2 7M4 11.6 6.8 9M12 11.6 9.2 9" />
+      </svg>
+    </div>
+  );
+}
+
 export function NavTree() {
   return (
-    <aside className="w-[168px] shrink-0 bg-surface-900 border-r border-surface-600/60 h-full flex flex-col">
-      <div className="flex items-center gap-2 px-3 py-3 border-b border-surface-600/60">
-        <div className="w-6 h-6 rounded-md bg-accent text-white grid place-items-center text-[11px] font-semibold">F</div>
-        <span className="text-[13px] font-semibold tracking-tight">FMG Console</span>
-      </div>
+    <aside className="w-[220px] shrink-0 bg-surface-900 border-r border-surface-600/60 h-full flex flex-col">
+      <Link to="/" className="flex items-center gap-2.5 px-4 h-[60px] border-b border-surface-600/60">
+        <BrandMark />
+        <div className="leading-tight">
+          <div className="text-base font-semibold tracking-tight">FMG Console</div>
+          <div className="text-2xs text-ink-600">Fleet manager</div>
+        </div>
+      </Link>
 
-      <nav className="flex-1 overflow-y-auto px-1.5 py-2">
+      <nav className="flex-1 overflow-y-auto px-2.5 py-3" aria-label="Primary">
         {NAV.map((n, i) => {
           if (n.kind === 'group') {
             return (
-              <div
-                key={'g-' + i}
-                className="px-2 pt-3 pb-1 text-[10px] uppercase tracking-widest text-ink-600"
-              >
+              <div key={'g-' + i} className="eyebrow px-2.5 pt-5 pb-1.5">
                 {n.label}
               </div>
             );
@@ -164,12 +225,15 @@ export function NavTree() {
         })}
       </nav>
 
-      <div className="border-t border-surface-600/60 px-3 py-2.5">
-        <div className="flex items-center gap-1.5">
-          <StatusDot status="ok" size="sm" />
-          <span className="text-[11px] text-ink-200 truncate">fmg.tanlab.net</span>
+      <div className="m-2.5 rounded-lg border border-surface-600/60 bg-surface-800/60 px-3 py-2.5">
+        <div className="flex items-center gap-2">
+          <StatusDot status="ok" size="md" />
+          <span className="text-xs font-medium text-ink-200 truncate">fmg.tanlab.net</span>
         </div>
-        <div className="text-[10.5px] text-ink-400 mt-0.5">ADOM: root · v7.6.6</div>
+        <div className="flex items-center justify-between mt-1 text-2xs text-ink-400">
+          <span>ADOM <span className="text-ink-200">root</span></span>
+          <span className="font-mono">v7.6.6</span>
+        </div>
       </div>
     </aside>
   );

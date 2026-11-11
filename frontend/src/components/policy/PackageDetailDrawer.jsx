@@ -24,13 +24,13 @@ const actionTone = (a) => a === 'accept' ? 'success' : a === 'deny' ? 'danger' :
 function RuleRow({ rule }) {
   return (
     <tr className="hover:bg-surface-800/50 transition">
-      <td className="py-1.5 px-2 font-mono text-[10.5px] text-ink-400 tabular-nums">{rule.id}</td>
+      <td className="py-1.5 px-2 font-mono text-xs text-ink-400 tabular-nums">{rule.id}</td>
       <td className="py-1.5 px-2">
         <div className="font-medium">{rule.name}</div>
         {rule.profiles?.length > 0 && (
           <div className="flex gap-1 mt-0.5">
             {rule.profiles.slice(0, 3).map((p) => (
-              <span key={p} className="text-[9.5px] px-1 py-0.5 rounded bg-surface-800 text-ink-400">{p}</span>
+              <span key={p} className="text-2xs px-1 py-0.5 rounded bg-surface-800 text-ink-400">{p}</span>
             ))}
           </div>
         )}
@@ -39,7 +39,7 @@ function RuleRow({ rule }) {
       <td className="py-1.5 px-2"><span className="code">{rule.dst}</span></td>
       <td className="py-1.5 px-2"><span className="code">{rule.service}</span></td>
       <td className="py-1.5 px-2"><Chip variant={actionTone(rule.action)}>{rule.action}</Chip></td>
-      <td className="py-1.5 px-2 text-right text-ink-400 tabular-nums text-[11px]">
+      <td className="py-1.5 px-2 text-right text-ink-400 tabular-nums text-xs">
         {rule.hits != null ? rule.hits.toLocaleString() : '—'}
       </td>
     </tr>
@@ -51,7 +51,7 @@ export function PackageDetailDrawer({ name, open, onClose }) {
   const [diffAt, setDiffAt] = useState(null);
 
   const doInstall = () => {
-    toast.info('Install is read-only in demo', {
+    toast.info('Installing is disabled in this read-only demo', {
       detail: `Would push ${name} to ${data?.assignedDevices?.length ?? 0} devices`,
     });
   };
@@ -66,7 +66,7 @@ export function PackageDetailDrawer({ name, open, onClose }) {
       footer={
         data && (
           <div className="flex items-center gap-2 w-full">
-            <div className="text-[11px] text-ink-400 flex-1">
+            <div className="text-xs text-ink-400 flex-1">
               {data.ruleCount} rules · {data.assignedDevices.length} devices assigned
             </div>
             <Button variant="primary" icon={Rocket} onClick={doInstall}>Install preview</Button>
@@ -74,7 +74,7 @@ export function PackageDetailDrawer({ name, open, onClose }) {
         )
       }
     >
-      {isLoading && <div className="text-[12px] text-ink-400">Loading package...</div>}
+      {isLoading && <div className="text-sm text-ink-400">Loading package...</div>}
       {data && (
         <div className="space-y-5">
           <section className="grid grid-cols-4 gap-2">
@@ -85,13 +85,13 @@ export function PackageDetailDrawer({ name, open, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <FileText className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Rules
             </h3>
             <div className="bg-surface-800 rounded-md overflow-hidden">
-              <table className="w-full text-left text-[12px]">
-                <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+              <table className="w-full text-left text-sm">
+                <thead className="text-ink-400 text-xs border-b border-surface-600/60">
                   <tr>
                     <th className="py-2 px-2 font-medium">#</th>
                     <th className="py-2 px-2 font-medium">Name</th>
@@ -110,14 +110,14 @@ export function PackageDetailDrawer({ name, open, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <Server className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Assigned devices ({data.assignedDevices.length})
             </h3>
             <div className="flex flex-wrap gap-1.5">
               {data.assignedDevices.map((d) => (
                 <Link key={d} to={`/devices/${encodeURIComponent(d)}`}
-                  className="text-[11px] px-2 py-0.5 rounded bg-surface-800 hover:bg-surface-700 text-ink-200 hover:text-sky-300 transition">
+                  className="text-xs px-2 py-0.5 rounded bg-surface-800 hover:bg-surface-700 text-ink-200 hover:text-sky-300 transition">
                   {d}
                 </Link>
               ))}
@@ -125,17 +125,17 @@ export function PackageDetailDrawer({ name, open, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
               <Clock className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.8} />
               Install history
-              <span className="text-[10.5px] text-ink-400 font-normal ml-1">click any row to see what changed</span>
+              <span className="text-xs text-ink-400 font-normal ml-1">click any row to see what changed</span>
             </h3>
             <ul className="bg-surface-800 rounded-md divide-y divide-surface-600/30">
               {data.installHistory.map((h, i) => (
                 <li key={i}>
                   <button
                     onClick={() => setDiffAt(h.at)}
-                    className="w-full flex items-center gap-3 px-3 py-2 text-[11.5px] hover:bg-surface-700/40 transition text-left group"
+                    className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-surface-700/40 transition text-left group"
                   >
                     <span className="text-ink-400 tabular-nums w-14 shrink-0">{relTime(h.at)}</span>
                     <Chip variant={h.result === 'success' ? 'success' : h.result === 'partial' ? 'warning' : 'danger'}>
@@ -146,7 +146,7 @@ export function PackageDetailDrawer({ name, open, onClose }) {
                     <span className="text-ink-400">{h.duration}s</span>
                     <span className="text-ink-400">·</span>
                     <span className="text-ink-400">by {h.by}</span>
-                    {h.note && <span className="text-amber-300 text-[11px] truncate">{h.note}</span>}
+                    {h.note && <span className="text-amber-300 text-xs truncate">{h.note}</span>}
                     <GitCompare className="h-3 w-3 text-ink-400 ml-auto opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition shrink-0" strokeWidth={1.8} />
                   </button>
                 </li>
@@ -169,7 +169,7 @@ export function PackageDetailDrawer({ name, open, onClose }) {
 function Stat({ label, value }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2">
-      <div className="text-[10px] uppercase tracking-wider text-ink-400">{label}</div>
+      <div className="text-2xs uppercase tracking-wider text-ink-400">{label}</div>
       <div className="text-[17px] font-semibold tabular-nums text-ink-50 mt-0.5">{value}</div>
     </div>
   );

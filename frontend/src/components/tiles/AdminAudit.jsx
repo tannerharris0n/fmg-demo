@@ -12,7 +12,7 @@ export function AdminAudit({ data }) {
         <Stat value={failed24h}     label="failed"     tone="text-rose-400" />
         <Stat value={changes24h}    label="changes" />
       </div>
-      <ul className="space-y-1 text-[11px]">
+      <ul className="space-y-1 text-xs">
         {byAdmin.map((a) => (
           <li key={a.name} className="flex items-center justify-between">
             <span className="text-ink-200">{a.name}</span>
@@ -36,7 +36,7 @@ function Stat({ value, label, tone }) {
       <div className={`text-[20px] font-semibold tabular-nums leading-none ${tone || 'text-ink-50'}`}>
         {value}
       </div>
-      <div className="text-[10.5px] text-ink-400 mt-1">{label}</div>
+      <div className="text-xs text-ink-400 mt-1">{label}</div>
     </div>
   );
 }

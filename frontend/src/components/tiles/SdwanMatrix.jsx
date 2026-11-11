@@ -21,7 +21,7 @@ export function SdwanMatrix({ data = [] }) {
           const pct = o.sla ?? 100;
           return (
             <div key={o.name}>
-              <div className="flex items-center justify-between text-[11.5px] mb-1.5">
+              <div className="flex items-center justify-between text-sm mb-1.5">
                 <span className="text-ink-200">{o.name}</span>
                 <span className={t.text}>
                   {o.sla != null ? `${o.sla}% · ${o.latencyMs}ms` : 'standby'}

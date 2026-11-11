@@ -61,7 +61,7 @@ export default function App() {
             <Route path="/aps"      element={<AccessPoints />} />
             <Route path="/settings" element={<Settings />} />
 
-            <Route path="*" element={<Placeholder title="Not found" note="That route does not exist." />} />
+            <Route path="*" element={<Placeholder />} />
           </Route>
         </Routes>
       </BrowserRouter>

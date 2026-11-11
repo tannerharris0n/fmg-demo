@@ -10,22 +10,22 @@ import { useAps, useApSsidConfig } from '../hooks/useFmgData';
 function BandBar({ label, channel, util, tone }) {
   if (channel == null) return (
     <div className="flex-1">
-      <div className="text-[9.5px] text-ink-600 uppercase tracking-wider mb-0.5">{label}</div>
+      <div className="text-2xs text-ink-600 uppercase tracking-wider mb-0.5">{label}</div>
       <div className="h-1.5 rounded bg-surface-800" />
-      <div className="text-[10px] text-ink-600 mt-0.5">—</div>
+      <div className="text-2xs text-ink-600 mt-0.5">—</div>
     </div>
   );
   const barColor = util > 60 ? 'bg-rose-500' : util > 40 ? 'bg-amber-400' : 'bg-emerald-500';
   return (
     <div className="flex-1">
-      <div className="flex items-center justify-between text-[9.5px] uppercase tracking-wider mb-0.5">
+      <div className="flex items-center justify-between text-2xs uppercase tracking-wider mb-0.5">
         <span className="text-ink-400">{label}</span>
         <span className="text-ink-500 font-mono normal-case">ch {channel}</span>
       </div>
       <div className="h-1.5 rounded bg-surface-800 overflow-hidden">
         <div className={clsx('h-full', barColor)} style={{ width: `${util}%` }} />
       </div>
-      <div className="text-[10px] text-ink-400 tabular-nums mt-0.5">{util}% util</div>
+      <div className="text-2xs text-ink-400 tabular-nums mt-0.5">{util}% util</div>
     </div>
   );
 }
@@ -42,10 +42,10 @@ function ApCard({ ap, selected, onClick }) {
     >
       <div className="flex items-center gap-2 mb-1">
         <span className={clsx('h-2 w-2 rounded-full', isUp ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse')} />
-        <span className="font-medium text-[12.5px] text-ink-50">{ap.name}</span>
+        <span className="font-medium text-base text-ink-50">{ap.name}</span>
         {ap.warning && <Badge variant="danger">offline</Badge>}
       </div>
-      <div className="text-[10.5px] text-ink-400 mb-2">
+      <div className="text-xs text-ink-400 mb-2">
         <span>{ap.model}</span>
         <span className="mx-1.5">·</span>
         <span>{ap.site}</span>
@@ -59,7 +59,7 @@ function ApCard({ ap, selected, onClick }) {
         <BandBar label="6G"   channel={ap.channel6}  util={ap.util6}  />
       </div>
 
-      <div className="flex items-center justify-between text-[10.5px]">
+      <div className="flex items-center justify-between text-xs">
         <div className="flex items-center gap-2">
           <Users className="h-2.5 w-2.5 text-ink-400" strokeWidth={2} />
           <span className="tabular-nums font-semibold text-ink-50">{ap.clients}</span>
@@ -91,8 +91,8 @@ export default function AccessPoints() {
   const sel = selected ? data.find((a) => a.name === selected) : null;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Access points" value={data.length} icon={Wifi} iconTone="info" />
         <KpiCard label="Online"         value={up} icon={Radio} iconTone="success" />
         <KpiCard label="Offline"        value={down} icon={AlertTriangle} iconTone={down ? 'danger' : 'muted'} delta={down ? 'needs attention' : ''} deltaTone={down ? 'danger' : 'muted'} />
@@ -108,8 +108,8 @@ export default function AccessPoints() {
       </Tile>
 
       <Tile title="SSID configuration" subtitle={`${ssids.length} broadcast SSIDs`} icon={Radio}>
-        <table className="w-full text-left text-[12px]">
-          <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+        <table className="w-full text-left text-sm">
+          <thead className="text-ink-400 text-xs border-b border-surface-600/60">
             <tr>
               <th className="py-2 px-2 font-medium">SSID</th>
               <th className="py-2 px-2 font-medium">Security</th>
@@ -125,14 +125,14 @@ export default function AccessPoints() {
               <tr key={s.ssid} className="hover:bg-surface-800/40">
                 <td className="py-2 px-2">
                   <div className="font-medium text-ink-50">{s.ssid}</div>
-                  <div className="text-ink-400 text-[10.5px]">{s.description}</div>
+                  <div className="text-ink-400 text-xs">{s.description}</div>
                 </td>
                 <td className="py-2 px-2"><Badge variant={s.security.startsWith('WPA3') ? 'success' : 'warning'}>{s.security}</Badge></td>
                 <td className="py-2 px-2 text-ink-200">{s.auth}</td>
                 <td className="py-2 px-2"><Chip variant={s.broadcast ? 'info' : 'neutral'}>{s.broadcast ? 'yes' : 'hidden'}</Chip></td>
                 <td className="py-2 px-2"><Chip variant={s.isolation ? 'warning' : 'neutral'}>{s.isolation ? 'on' : 'off'}</Chip></td>
                 <td className="py-2 px-2"><span className="code">{s.vlan}</span></td>
-                <td className="py-2 px-2 text-ink-400 text-[11px]">{s.ranges}</td>
+                <td className="py-2 px-2 text-ink-400 text-xs">{s.ranges}</td>
               </tr>
             ))}
           </tbody>
@@ -147,7 +147,7 @@ export default function AccessPoints() {
             <Stat label="5 GHz util"   value={sel.util5  != null ? `${sel.util5}%`  : '—'} />
             <Stat label="6 GHz util"   value={sel.util6  != null ? `${sel.util6}%`  : '—'} />
           </div>
-          <div className="mt-3 text-[11.5px] text-ink-400">
+          <div className="mt-3 text-sm text-ink-400">
             Broadcasting: {sel.ssids.length === 0 ? 'nothing (AP offline)' : sel.ssids.map((s) => <span key={s} className="code mr-1">{s}</span>)}
           </div>
         </Tile>
@@ -159,7 +159,7 @@ export default function AccessPoints() {
 function Stat({ label, value }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2">
-      <div className="text-[10px] uppercase tracking-wider text-ink-400">{label}</div>
+      <div className="text-2xs uppercase tracking-wider text-ink-400">{label}</div>
       <div className="text-[15px] font-semibold tabular-nums text-ink-50 mt-0.5">{value}</div>
     </div>
   );

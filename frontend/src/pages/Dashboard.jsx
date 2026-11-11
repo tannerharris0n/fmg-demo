@@ -24,7 +24,7 @@ import { ActivityFeed } from '../components/tiles/ActivityFeed';
  */
 function LinkedKpi({ to, ...props }) {
   return (
-    <Link to={to} className="block hover:-translate-y-[1px] focus-visible:-translate-y-[1px] transition-transform">
+    <Link to={to} className="block group rounded-xl hover:-translate-y-px focus-visible:-translate-y-px transition-transform [&>div]:hover:border-surface-500">
       <KpiCard {...props} />
     </Link>
   );
@@ -44,12 +44,12 @@ export default function Dashboard() {
 function NetworkPreset({ data }) {
   const s = data.summary;
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="animate-stagger-1">
         <AtRiskPanel items={data.atRisk} />
       </div>
 
-      <div className="grid grid-cols-4 gap-2 animate-stagger-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-stagger-2">
         <LinkedKpi
           to="/devices"
           label="Devices online"
@@ -65,36 +65,36 @@ function NetworkPreset({ data }) {
           icon={Link2} iconTone="ok"
           value={data.vpn.up}
           suffix={` / ${data.vpn.total}`}
-          delta={`${data.vpn.total - data.vpn.up} down · attention`}
-          deltaTone="warning"
+          delta={data.vpn.total - data.vpn.up > 0 ? `${data.vpn.total - data.vpn.up} down · needs attention` : "All tunnels up"}
+          deltaTone={data.vpn.total - data.vpn.up > 0 ? "warning" : "ok"}
         />
         <LinkedKpi
           to="/fabric/sdwan"
-          label="SD-WAN avg SLA"
+          label="SD-WAN SLA (avg)"
           icon={Activity} iconTone="info"
           value={s.sdwan?.avgSla ?? 91}
           suffix="%"
-          delta="1 overlay at risk"
-          deltaTone="warning"
+          delta={(s.sdwan?.overlaysAtRisk ?? 0) > 0 ? `${s.sdwan.overlaysAtRisk} overlay${s.sdwan.overlaysAtRisk === 1 ? "" : "s"} below target` : "All overlays meeting SLA"}
+          deltaTone={(s.sdwan?.overlaysAtRisk ?? 0) > 0 ? "warning" : "ok"}
         />
         <LinkedKpi
           to="/tasks"
           label="Pending installs"
           icon={Cloud} iconTone="warning"
           value={s.installs.pending}
-          delta={`1 running · ${s.installs.runningPct}%`}
+          delta={s.installs.running ? `${s.installs.running} in progress · ${s.installs.runningPct}% complete` : "None in progress"}
           deltaTone="info"
         />
       </div>
 
       <div className="animate-stagger-3"><SdwanMatrix data={data.sdwan} /></div>
 
-      <div className="grid grid-cols-2 gap-3 animate-stagger-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-stagger-4">
         <VpnTunnels data={data.vpn} />
         <HaClusters data={data.ha} />
       </div>
 
-      <div className="grid grid-cols-[1.6fr_1fr] gap-3 animate-stagger-5">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 animate-stagger-5">
         <DeviceFleet data={data.fleet} />
         <FirmwarePosture data={data.firmware} />
       </div>
@@ -107,18 +107,18 @@ function NetworkPreset({ data }) {
 function SecurityPreset({ data }) {
   const s = data.summary;
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="animate-stagger-1">
         <AtRiskPanel items={data.atRisk} />
       </div>
 
-      <div className="grid grid-cols-4 gap-2 animate-stagger-2">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-stagger-2">
         <LinkedKpi
           to="/security/threats"
           label="Threats blocked"
           icon={ShieldCheck} iconTone="info"
           value={data.threats.total24h.toLocaleString()}
-          delta="last 24h"
+          delta="in the last 24 hours"
           deltaTone="ok"
         />
         <LinkedKpi
@@ -127,7 +127,7 @@ function SecurityPreset({ data }) {
           icon={FileText} iconTone="danger"
           value={s.policies.dead}
           suffix={` / ${s.policies.total}`}
-          delta="no hits 30d"
+          delta="no hits in 30 days"
           deltaTone="danger"
         />
         <LinkedKpi
@@ -135,7 +135,7 @@ function SecurityPreset({ data }) {
           label="Config drift"
           icon={AlertTriangle} iconTone="danger"
           value={s.drift.count}
-          delta="needs attention"
+          delta="devices out of sync with FMG"
           deltaTone="danger"
         />
         <LinkedKpi
@@ -143,19 +143,19 @@ function SecurityPreset({ data }) {
           label="CVE exposures"
           icon={Lock} iconTone="warning"
           value={s.cves?.count ?? data.cves.length}
-          delta="1 critical · SSL-VPN"
+          delta={`${s.cves?.critical ?? 1} critical · patch available`}
           deltaTone="warning"
         />
       </div>
 
-      <div className="grid grid-cols-[1.6fr_1fr] gap-3 animate-stagger-3">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4 animate-stagger-3">
         <PolicyHeatmap data={data.heatmap} />
         <ThreatActivity data={data.threats} />
       </div>
 
       <div className="animate-stagger-4"><CveWatchlist data={data.cves} /></div>
 
-      <div className="grid grid-cols-2 gap-3 animate-stagger-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 animate-stagger-5">
         <DriftAlerts data={data.drift} />
         <AdminAudit data={data.audit} />
       </div>
@@ -167,9 +167,10 @@ function SecurityPreset({ data }) {
 
 function ErrorState({ message }) {
   return (
-    <div className="p-8 text-center text-ink-400">
+    <div className="p-10 text-center text-ink-400">
       <AlertTriangle className="h-5 w-5 mx-auto mb-2 text-rose-400" strokeWidth={1.7} />
-      <div className="text-sm">{message}</div>
+      <div className="text-base text-ink-50 font-medium">Couldn't load the dashboard</div>
+      <div className="text-sm mt-1">{message}</div>
     </div>
   );
 }

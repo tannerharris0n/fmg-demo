@@ -21,7 +21,7 @@ export function CveWatchlist({ data = [] }) {
     <Tile title="CVE watchlist" subtitle="affects installed versions" icon={Lock} to="/security/cve">
       <ul className="divide-y divide-surface-600/60">
         {data.map((c) => (
-          <li key={c.id} className="flex items-center gap-3 py-2 text-[11.5px]">
+          <li key={c.id} className="flex items-center gap-3 py-2 text-sm">
             <Chip variant={variantFor(c.severity)} className="shrink-0">
               {labelFor(c.severity)} · {c.score}
             </Chip>
