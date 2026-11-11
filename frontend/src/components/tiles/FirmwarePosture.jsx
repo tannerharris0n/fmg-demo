@@ -26,7 +26,7 @@ export function FirmwarePosture({ data }) {
           />
         ))}
       </div>
-      <ul className="space-y-1 text-[11px]">
+      <ul className="space-y-1 text-xs">
         {buckets.map((b) => (
           <li key={b.version} className="flex items-center justify-between">
             <span className="flex items-center gap-1.5 text-ink-200">

@@ -33,9 +33,9 @@ export function DeviceFleet({ data = [] }) {
                 <StatusDot
                   status={d.status === 'ok' ? 'ok' : d.status === 'warning' ? 'warning' : 'danger'}
                 />
-                <span className="text-[11px] font-medium truncate">{d.name}</span>
+                <span className="text-xs font-medium truncate">{d.name}</span>
               </div>
-              <div className={clsx('text-[10px] mt-0.5', noteTone(d.status))}>
+              <div className={clsx('text-2xs mt-0.5', noteTone(d.status))}>
                 {d.note ?? `${d.platform?.replace('FortiGate-', '') || ''} · ${d.firmware || ''}`}
               </div>
             </Link>

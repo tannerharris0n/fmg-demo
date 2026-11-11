@@ -27,8 +27,8 @@ function AddressesTab({ items, query, onSelect }) {
   const f = items.filter((a) => !query || [a.name, a.type, a.value].join(' ').toLowerCase().includes(query.toLowerCase()));
   if (f.length === 0) return <EmptyState title="No matches" />;
   return (
-    <table className="w-full text-left text-[12px]">
-      <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+    <table className="w-full text-left text-sm">
+      <thead className="text-ink-400 text-xs border-b border-surface-600/60">
         <tr>
           <th className="py-2 px-2 font-medium">Name</th>
           <th className="py-2 px-2 font-medium">Type</th>
@@ -43,7 +43,7 @@ function AddressesTab({ items, query, onSelect }) {
             <td className="py-2 px-2"><Badge variant={TYPE_BADGE[a.type] || 'neutral'}>{a.type}</Badge></td>
             <td className="py-2 px-2">
               {a.members
-                ? <span className="text-ink-400 text-[11px]">{a.members.length} members: {a.members.slice(0, 3).join(', ')}{a.members.length > 3 ? '…' : ''}</span>
+                ? <span className="text-ink-400 text-xs">{a.members.length} members: {a.members.slice(0, 3).join(', ')}{a.members.length > 3 ? '…' : ''}</span>
                 : <span className="code">{a.value}</span>}
             </td>
             <td className="py-2 px-2 text-right text-ink-200 tabular-nums">{a.usedBy}</td>
@@ -58,8 +58,8 @@ function ServicesTab({ items, query, onSelect }) {
   const f = items.filter((s) => !query || [s.name, s.protocol, s.ports].join(' ').toLowerCase().includes(query.toLowerCase()));
   if (f.length === 0) return <EmptyState title="No matches" />;
   return (
-    <table className="w-full text-left text-[12px]">
-      <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+    <table className="w-full text-left text-sm">
+      <thead className="text-ink-400 text-xs border-b border-surface-600/60">
         <tr>
           <th className="py-2 px-2 font-medium">Name</th>
           <th className="py-2 px-2 font-medium">Protocol</th>
@@ -87,8 +87,8 @@ function SchedulesTab({ items, query, onSelect }) {
   const f = items.filter((s) => !query || [s.name, s.type, s.spec].join(' ').toLowerCase().includes(query.toLowerCase()));
   if (f.length === 0) return <EmptyState title="No matches" />;
   return (
-    <table className="w-full text-left text-[12px]">
-      <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+    <table className="w-full text-left text-sm">
+      <thead className="text-ink-400 text-xs border-b border-surface-600/60">
         <tr>
           <th className="py-2 px-2 font-medium">Name</th>
           <th className="py-2 px-2 font-medium">Type</th>
@@ -114,8 +114,8 @@ function VipsTab({ items, query, onSelect }) {
   const f = items.filter((v) => !query || [v.name, v.extIp, v.intIp].join(' ').toLowerCase().includes(query.toLowerCase()));
   if (f.length === 0) return <EmptyState title="No matches" />;
   return (
-    <table className="w-full text-left text-[12px]">
-      <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+    <table className="w-full text-left text-sm">
+      <thead className="text-ink-400 text-xs border-b border-surface-600/60">
         <tr>
           <th className="py-2 px-2 font-medium">Name</th>
           <th className="py-2 px-2 font-medium">External</th>
@@ -129,7 +129,7 @@ function VipsTab({ items, query, onSelect }) {
             <td className="py-2 px-2 font-medium text-ink-50 hover:text-sky-300 transition">{v.name}</td>
             <td className="py-2 px-2">
               <span className="code">{v.extIp}:{v.extPort}</span>
-              <span className="text-ink-400 text-[10.5px] ml-1.5">({v.extIntf})</span>
+              <span className="text-ink-400 text-xs ml-1.5">({v.extIntf})</span>
             </td>
             <td className="py-2 px-2">
               <span className="code">{v.intIp}:{v.intPort}</span>
@@ -159,8 +159,8 @@ export default function PolicyObjects() {
   if (!data) return null;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Addresses" value={summary.addresses} icon={Globe}          iconTone="info" />
         <KpiCard label="Services"  value={summary.services}  icon={Network}        iconTone="muted" />
         <KpiCard label="Schedules" value={summary.schedules} icon={Calendar}       iconTone="muted" />
@@ -180,7 +180,7 @@ export default function PolicyObjects() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
-                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-[11.5px] outline-none focus:border-accent w-40"
+                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-sm outline-none focus:border-accent w-40"
               />
             </div>
             <div className="inline-flex bg-surface-800 rounded-md p-0.5 gap-0.5 ring-1 ring-surface-600/60">
@@ -193,7 +193,7 @@ export default function PolicyObjects() {
                     key={t.id}
                     onClick={() => setTab(t.id)}
                     className={clsx(
-                      'flex items-center gap-1 text-[11px] px-2 py-1 rounded font-medium transition',
+                      'flex items-center gap-1 text-xs px-2 py-1 rounded font-medium transition',
                       active ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200'
                     )}
                   >

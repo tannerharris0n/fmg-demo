@@ -32,11 +32,11 @@ function Node({ name, serial, role }) {
   return (
     <Link to={`/devices/${encodeURIComponent(name)}`} className="block bg-surface-800 hover:bg-surface-700 rounded-md px-3 py-2.5 transition">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-[11px] uppercase tracking-widest text-ink-400">{role}</span>
+        <span className="text-xs uppercase tracking-widest text-ink-400">{role}</span>
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
       </div>
-      <div className="text-[13px] font-semibold text-ink-50 hover:text-sky-300 transition">{name}</div>
-      <div className="text-[10.5px] text-ink-400 font-mono mt-1 truncate">{serial}</div>
+      <div className="text-base font-semibold text-ink-50 hover:text-sky-300 transition">{name}</div>
+      <div className="text-xs text-ink-400 font-mono mt-1 truncate">{serial}</div>
     </Link>
   );
 }
@@ -51,7 +51,7 @@ function ClusterCard({ c }) {
     <div className={clsx('tile border', toneBorder)}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <span className="text-[13px] font-semibold">{c.name}</span>
+          <span className="text-base font-semibold">{c.name}</span>
           <Badge variant="neutral">{c.mode}</Badge>
           {c.override && <Badge variant="warning">override</Badge>}
         </div>
@@ -65,14 +65,14 @@ function ClusterCard({ c }) {
         <Node role="secondary" name={c.secondary} serial={c.secondarySerial} />
       </div>
 
-      <div className="grid grid-cols-3 gap-2 text-[11px]">
+      <div className="grid grid-cols-3 gap-2 text-xs">
         <Stat label="Heartbeat" value={fmtHb(c.heartbeatAgeMs)}
               tone={c.heartbeatAgeMs > 3000 ? 'text-amber-400' : 'text-emerald-400'} />
         <Stat label="Sync" value={c.syncState} tone={c.syncState === 'in-sync' ? 'text-emerald-400' : 'text-amber-400'} />
         <Stat label="Uptime" value={fmtUptime(c.uptimeSec)} />
       </div>
 
-      <div className="mt-2.5 flex items-center justify-between text-[10.5px] text-ink-400">
+      <div className="mt-2.5 flex items-center justify-between text-xs text-ink-400">
         <span className="flex items-center gap-1">
           <ArrowRightLeft className="h-3 w-3" strokeWidth={1.8} />
           last failover {relTime(c.lastFailover)}
@@ -86,8 +86,8 @@ function ClusterCard({ c }) {
 function Stat({ label, value, tone = 'text-ink-50' }) {
   return (
     <div>
-      <div className="text-[10px] text-ink-400 uppercase tracking-wider">{label}</div>
-      <div className={clsx('text-[12.5px] font-medium tabular-nums mt-0.5', tone)}>{value}</div>
+      <div className="text-2xs text-ink-400 uppercase tracking-wider">{label}</div>
+      <div className={clsx('text-base font-medium tabular-nums mt-0.5', tone)}>{value}</div>
     </div>
   );
 }
@@ -102,8 +102,8 @@ export default function HaClusters() {
   const danger = data.filter((c) => c.status === 'danger').length;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Clusters"         value={data.length}            icon={ShieldCheck}   iconTone="muted" />
         <KpiCard label="Healthy"          value={ok}                     icon={CheckCircle2}  iconTone="ok"      delta="in-sync" deltaTone="ok" />
         <KpiCard label="At risk"           value={warn}                   icon={AlertTriangle} iconTone="warning" delta="needs review" deltaTone="warning" />
@@ -111,7 +111,7 @@ export default function HaClusters() {
       </div>
 
       <Tile title="Clusters" subtitle={`${data.length} pairs`} icon={ShieldCheck}>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {data.map((c) => <ClusterCard key={c.name} c={c} />)}
         </div>
       </Tile>

@@ -54,7 +54,7 @@ export function Tooltip({ content, side = 'top', delay = 120, children, classNam
           role="tooltip"
           className={clsx(
             'absolute z-50 pointer-events-none whitespace-nowrap',
-            'bg-surface-950 text-ink-50 text-[11px] leading-relaxed',
+            'bg-surface-950 text-ink-50 text-xs leading-relaxed',
             'px-2 py-1 rounded-md shadow-lg ring-1 ring-surface-600/80',
             side === 'top' || side === 'bottom' ? 'left-1/2 -translate-x-1/2' : '',
             positionClass

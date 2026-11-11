@@ -40,7 +40,7 @@ function PortMap({ ports }) {
           <g key={p.port}>
             <title>{`Port ${p.port} · ${p.status} · VLAN ${p.vlan}${p.poeWatts ? ` · PoE ${p.poeWatts}W` : ''}${p.uplink ? ' · UPLINK' : ''}`}</title>
             <rect x={x} y={y} width={boxW} height={boxH} rx={1.5} fill={c.fill} stroke={c.stroke} strokeWidth={0.6} />
-            {p.uplink && <text x={x + boxW/2} y={y + 9} fontSize={7} fontFamily="JetBrains Mono" fill="#F5F7FA" textAnchor="middle" fontWeight="700">U</text>}
+            {p.uplink && <text x={x + boxW/2} y={y + 9} fontSize={7} fontFamily="IBM Plex Mono" fill="#F5F7FA" textAnchor="middle" fontWeight="700">U</text>}
           </g>
         );
       })}
@@ -63,10 +63,10 @@ function SwitchCard({ sw, selected, onClick }) {
     >
       <div className="flex items-center gap-2 mb-1.5">
         <span className={clsx('h-2 w-2 rounded-full', sw.uplink === 'up' ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse')} />
-        <span className="font-medium text-[12.5px] text-ink-50">{sw.name}</span>
+        <span className="font-medium text-base text-ink-50">{sw.name}</span>
         {sw.warning && <Badge variant="danger">warning</Badge>}
       </div>
-      <div className="text-[10.5px] text-ink-400 mb-2 flex flex-wrap gap-x-3 gap-y-0.5">
+      <div className="text-xs text-ink-400 mb-2 flex flex-wrap gap-x-3 gap-y-0.5">
         <span>{sw.model}</span>
         <span>·</span>
         <span>{sw.site}</span>
@@ -76,7 +76,7 @@ function SwitchCard({ sw, selected, onClick }) {
 
       <PortMap ports={sw.ports} />
 
-      <div className="mt-2 flex items-center gap-3 text-[10.5px] text-ink-400">
+      <div className="mt-2 flex items-center gap-3 text-xs text-ink-400">
         <span className="inline-flex items-center gap-1"><Activity className="h-2.5 w-2.5" strokeWidth={2} /><span className="tabular-nums text-ink-200">{upPorts}/{sw.ports.length}</span> up</span>
         <span className="inline-flex items-center gap-1"><Users    className="h-2.5 w-2.5" strokeWidth={2} /><span className="tabular-nums text-ink-200">{sw.clients}</span> clients</span>
         <span className="inline-flex items-center gap-1"><Zap      className="h-2.5 w-2.5" strokeWidth={2} /><span className={clsx('tabular-nums', poeTone)}>{sw.poeUsed}/{sw.poeBudget}W</span></span>
@@ -88,7 +88,7 @@ function SwitchCard({ sw, selected, onClick }) {
 
 function Legend() {
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10.5px] text-ink-400">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-400">
       <span className="inline-flex items-center gap-1.5"><span className="h-2 w-3 rounded-sm bg-sky-900 ring-1 ring-sky-500" /> link up</span>
       <span className="inline-flex items-center gap-1.5"><span className="h-2 w-3 rounded-sm bg-emerald-900 ring-1 ring-emerald-500" /> PoE active</span>
       <span className="inline-flex items-center gap-1.5"><span className="h-2 w-3 rounded-sm bg-purple-900 ring-1 ring-purple-500" /> uplink trunk</span>
@@ -112,8 +112,8 @@ export default function Switches() {
   const sel = selected ? data.find((s) => s.name === selected) : null;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Switches"       value={data.length} icon={Network} iconTone="info" />
         <KpiCard label="Ports up"       value={`${upPorts}/${totalPorts}`} icon={Activity} iconTone="success" />
         <KpiCard label="Clients"        value={totalClients} icon={Users} iconTone="info" />
@@ -135,8 +135,8 @@ export default function Switches() {
             <Stat label="Controller" value={sel.managedBy} />
             <Stat label="Uptime"     value={sel.uptime} />
           </div>
-          <table className="w-full text-left text-[11.5px]">
-            <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+          <table className="w-full text-left text-sm">
+            <thead className="text-ink-400 text-xs border-b border-surface-600/60">
               <tr>
                 <th className="py-2 px-2 font-medium w-12">Port</th>
                 <th className="py-2 px-2 font-medium">Status</th>
@@ -149,7 +149,7 @@ export default function Switches() {
             <tbody className="divide-y divide-surface-800">
               {sel.ports.map((p) => (
                 <tr key={p.port} className="hover:bg-surface-800/40">
-                  <td className="py-1.5 px-2 tabular-nums font-mono text-ink-400 text-[10.5px]">{p.port}</td>
+                  <td className="py-1.5 px-2 tabular-nums font-mono text-ink-400 text-xs">{p.port}</td>
                   <td className="py-1.5 px-2">
                     <span className={clsx('inline-flex items-center gap-1.5', p.status === 'up' ? 'text-emerald-400' : 'text-ink-400')}>
                       <span className={clsx('h-1.5 w-1.5 rounded-full', p.status === 'up' ? 'bg-emerald-500' : 'bg-surface-600')} />
@@ -159,7 +159,7 @@ export default function Switches() {
                   <td className="py-1.5 px-2"><span className="code">{p.vlan}</span></td>
                   <td className="py-1.5 px-2 text-ink-200">{p.linkSpeed}</td>
                   <td className="py-1.5 px-2 text-right tabular-nums text-ink-200">{p.poeWatts > 0 ? `${p.poeWatts}W` : '—'}</td>
-                  <td className="py-1.5 px-2 text-ink-400 text-[10.5px]">{p.uplink ? 'uplink trunk' : p.vlan === 900 ? 'OT segment' : ''}</td>
+                  <td className="py-1.5 px-2 text-ink-400 text-xs">{p.uplink ? 'uplink trunk' : p.vlan === 900 ? 'OT segment' : ''}</td>
                 </tr>
               ))}
             </tbody>
@@ -173,8 +173,8 @@ export default function Switches() {
 function Stat({ label, value }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2">
-      <div className="text-[10px] uppercase tracking-wider text-ink-400">{label}</div>
-      <div className="text-[13px] font-semibold tabular-nums text-ink-50 mt-0.5">{value}</div>
+      <div className="text-2xs uppercase tracking-wider text-ink-400">{label}</div>
+      <div className="text-base font-semibold tabular-nums text-ink-50 mt-0.5">{value}</div>
     </div>
   );
 }

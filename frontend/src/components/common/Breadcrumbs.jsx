@@ -14,7 +14,7 @@ export function Breadcrumbs({ items = [], className }) {
   if (items.length === 0) return null;
 
   return (
-    <nav className={clsx('flex items-center gap-1 text-[11.5px] text-ink-400', className)} aria-label="Breadcrumb">
+    <nav className={clsx('flex items-center gap-1 text-sm text-ink-400', className)} aria-label="Breadcrumb">
       {items.map((item, i) => {
         const last = i === items.length - 1;
         return (

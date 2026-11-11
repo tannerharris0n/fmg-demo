@@ -18,8 +18,10 @@ export function AppShell() {
       <NavTree />
       <div className="flex-1 min-w-0 flex flex-col">
         <TopBar />
-        <main className="flex-1 overflow-y-auto px-5 py-4">
-          <Outlet />
+        <main className="canvas flex-1 overflow-y-auto px-6 py-5">
+          <div className="mx-auto w-full max-w-[1480px]">
+            <Outlet />
+          </div>
         </main>
       </div>
       <CommandPalette />

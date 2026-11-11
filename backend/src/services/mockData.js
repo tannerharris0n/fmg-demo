@@ -121,14 +121,14 @@ function vpnTunnels() {
 
 function haClusters() {
   return [
-    { name: 'hq-core',     mode: 'A/P', status: 'ok',      syncNote: 'sync ok' },
-    { name: 'hq-dist',     mode: 'A/A', status: 'ok',      syncNote: 'sync ok' },
-    { name: 'hq-dmz',      mode: 'A/P', status: 'ok',      syncNote: 'sync ok' },
-    { name: 'br-sea',      mode: 'A/P', status: 'warning', syncNote: 'hb miss 3' },
-    { name: 'br-tac',      mode: 'A/P', status: 'ok',      syncNote: 'sync ok' },
-    { name: 'br-spk',      mode: 'A/P', status: 'ok',      syncNote: 'sync ok' },
-    { name: 'ot-plant-01', mode: 'A/P', status: 'ok',      syncNote: 'sync ok' },
-    { name: 'ot-plant-05', mode: 'A/P', status: 'warning', syncNote: 'sync lag 12s' },
+    { name: 'hq-core',     mode: 'A/P', status: 'ok',      syncNote: 'in sync' },
+    { name: 'hq-dist',     mode: 'A/A', status: 'ok',      syncNote: 'in sync' },
+    { name: 'hq-dmz',      mode: 'A/P', status: 'ok',      syncNote: 'in sync' },
+    { name: 'br-sea',      mode: 'A/P', status: 'warning', syncNote: '3 heartbeats missed' },
+    { name: 'br-tac',      mode: 'A/P', status: 'ok',      syncNote: 'in sync' },
+    { name: 'br-spk',      mode: 'A/P', status: 'ok',      syncNote: 'in sync' },
+    { name: 'ot-plant-01', mode: 'A/P', status: 'ok',      syncNote: 'in sync' },
+    { name: 'ot-plant-05', mode: 'A/P', status: 'warning', syncNote: 'sync lagging 12s' },
   ];
 }
 

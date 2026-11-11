@@ -140,15 +140,15 @@ function EndpointNode({ pos, label, short, status, radius = 15, onClick, devices
       {/* Outer ring */}
       <circle cx={pos.x} cy={pos.y} r={radius} fill={s.fill} stroke={s.stroke} strokeWidth={1.8} />
       {/* Label inside */}
-      <text x={pos.x} y={pos.y + 3} textAnchor="middle" fontSize="9" fontWeight="600" fill="#F5F7FA" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={pos.x} y={pos.y + 3} textAnchor="middle" fontSize="10" fontWeight="600" fill="#F5F7FA" fontFamily="IBM Plex Sans, sans-serif">
         {short}
       </text>
       {/* Label outside */}
-      <text x={pos.x} y={labelY} textAnchor="middle" fontSize="10" fill="#8A919C" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={pos.x} y={labelY} textAnchor="middle" fontSize="11" fill="#939BA8" fontFamily="IBM Plex Sans, sans-serif">
         {label}
       </text>
       {devices != null && (
-        <text x={pos.x} y={labelY + 11} textAnchor="middle" fontSize="9" fill="#5A6169" fontFamily="JetBrains Mono, monospace">
+        <text x={pos.x} y={labelY + 11} textAnchor="middle" fontSize="10" fill="#6B7482" fontFamily="IBM Plex Mono, monospace">
           {devices}
         </text>
       )}
@@ -161,13 +161,13 @@ function HqNode({ onClick, hoverSet }) {
     <g style={{ cursor: 'pointer' }} onClick={onClick}>
       <circle cx={500} cy={300} r={55} fill="#0B2644" stroke="#378ADD" strokeWidth={2} />
       <circle cx={500} cy={300} r={62} fill="none" stroke="#378ADD" strokeWidth={1} opacity={0.25} />
-      <text x={500} y={293} textAnchor="middle" fontSize="11" fontWeight="700" fill="#F5F7FA" fontFamily="Plus Jakarta Sans, sans-serif" letterSpacing="0.04em">
+      <text x={500} y={293} textAnchor="middle" fontSize="12" fontWeight="700" fill="#F5F7FA" fontFamily="IBM Plex Sans, sans-serif" letterSpacing="0.04em">
         HQ SEATTLE
       </text>
-      <text x={500} y={307} textAnchor="middle" fontSize="9.5" fill="#8DB8E6" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={500} y={307} textAnchor="middle" fontSize="10.5" fill="#8DB8E6" fontFamily="IBM Plex Sans, sans-serif">
         hub · 7 devices
       </text>
-      <text x={500} y={321} textAnchor="middle" fontSize="8.5" fill="#5A6169" fontFamily="JetBrains Mono, monospace">
+      <text x={500} y={321} textAnchor="middle" fontSize="9.5" fill="#6B7482" fontFamily="IBM Plex Mono, monospace">
         10.0.0.0/8
       </text>
     </g>
@@ -182,10 +182,10 @@ function CloudNode({ pos, label, sub, status, onClick }) {
         <rect x={pos.x - 42} y={pos.y - 22} width={84} height={44} rx={10} fill="none" stroke={s.stroke} strokeWidth={1.5} opacity={0.4} style={{ animation: 'nodePulse 2s ease-in-out infinite' }} />
       )}
       <rect x={pos.x - 38} y={pos.y - 18} width={76} height={36} rx={8} fill={s.fill} stroke={s.stroke} strokeWidth={1.8} />
-      <text x={pos.x} y={pos.y - 3} textAnchor="middle" fontSize="10" fontWeight="600" fill="#F5F7FA" fontFamily="Plus Jakarta Sans, sans-serif">
+      <text x={pos.x} y={pos.y - 3} textAnchor="middle" fontSize="11" fontWeight="600" fill="#F5F7FA" fontFamily="IBM Plex Sans, sans-serif">
         {label}
       </text>
-      <text x={pos.x} y={pos.y + 9} textAnchor="middle" fontSize="8.5" fill="#8A919C" fontFamily="JetBrains Mono, monospace">
+      <text x={pos.x} y={pos.y + 9} textAnchor="middle" fontSize="9.5" fill="#939BA8" fontFamily="IBM Plex Mono, monospace">
         {sub}
       </text>
     </g>
@@ -195,27 +195,27 @@ function CloudNode({ pos, label, sub, status, onClick }) {
 function Legend() {
   return (
     <g transform="translate(20, 540)">
-      <rect x={0} y={0} width={320} height={44} rx={6} fill="rgba(17,20,26,0.85)" stroke="#2A3039" strokeWidth={0.5} />
-      <g transform="translate(10, 12)" fontFamily="Plus Jakarta Sans, sans-serif">
+      <rect x={0} y={0} width={320} height={44} rx={6} fill="rgba(17,20,26,0.85)" stroke="#283040" strokeWidth={0.5} />
+      <g transform="translate(10, 12)" fontFamily="IBM Plex Sans, sans-serif">
         <g transform="translate(0, 0)">
           <line x1={0} y1={6} x2={18} y2={6} stroke="#10B981" strokeWidth={2} />
-          <text x={22} y={9.5} fontSize="10" fill="#C4CAD3">Healthy</text>
+          <text x={22} y={9.5} fontSize="11" fill="#C4CAD3">Healthy</text>
         </g>
         <g transform="translate(80, 0)">
           <line x1={0} y1={6} x2={18} y2={6} stroke="#F59E0B" strokeWidth={2} />
-          <text x={22} y={9.5} fontSize="10" fill="#C4CAD3">SLA warning</text>
+          <text x={22} y={9.5} fontSize="11" fill="#C4CAD3">SLA warning</text>
         </g>
         <g transform="translate(175, 0)">
           <line x1={0} y1={6} x2={18} y2={6} stroke="#EF4444" strokeWidth={2} />
-          <text x={22} y={9.5} fontSize="10" fill="#C4CAD3">Failing</text>
+          <text x={22} y={9.5} fontSize="11" fill="#C4CAD3">Failing</text>
         </g>
         <g transform="translate(0, 20)">
           <line x1={0} y1={6} x2={18} y2={6} stroke="#64748B" strokeWidth={2} strokeDasharray="3 3" />
-          <text x={22} y={9.5} fontSize="10" fill="#C4CAD3">Standby</text>
+          <text x={22} y={9.5} fontSize="11" fill="#C4CAD3">Standby</text>
         </g>
         <g transform="translate(80, 20)">
           <circle cx={9} cy={6} r={5} fill="none" stroke="#EF4444" strokeWidth={1.2} opacity={0.6} />
-          <text x={22} y={9.5} fontSize="10" fill="#C4CAD3">Needs attention</text>
+          <text x={22} y={9.5} fontSize="11" fill="#C4CAD3">Needs attention</text>
         </g>
       </g>
     </g>
@@ -261,13 +261,13 @@ export function SdwanMap({ overlays }) {
         <circle cx={500} cy={300} r={140} fill="url(#hqGlow)" />
 
         {/* Region labels */}
-        <text x={500} y={30} textAnchor="middle" fontSize="10" fill="#5A6169" letterSpacing="0.15em" fontFamily="Plus Jakarta Sans, sans-serif">
+        <text x={500} y={30} textAnchor="middle" fontSize="11" fill="#6B7482" letterSpacing="0.15em" fontFamily="IBM Plex Sans, sans-serif">
           BRANCHES · 12 SITES
         </text>
-        <text x={500} y={580} textAnchor="middle" fontSize="10" fill="#5A6169" letterSpacing="0.15em" fontFamily="Plus Jakarta Sans, sans-serif">
+        <text x={500} y={580} textAnchor="middle" fontSize="11" fill="#6B7482" letterSpacing="0.15em" fontFamily="IBM Plex Sans, sans-serif">
           OT PLANTS · 8 SITES
         </text>
-        <text x={875} y={30} textAnchor="middle" fontSize="10" fill="#5A6169" letterSpacing="0.15em" fontFamily="Plus Jakarta Sans, sans-serif">
+        <text x={875} y={30} textAnchor="middle" fontSize="11" fill="#6B7482" letterSpacing="0.15em" fontFamily="IBM Plex Sans, sans-serif">
           CLOUD
         </text>
 
@@ -326,17 +326,17 @@ export function SdwanMap({ overlays }) {
           {criticalOverlays > 0 ? (
             <>
               <span className="h-1.5 w-1.5 rounded-full bg-rose-500 animate-pulse" />
-              <span className="text-[10.5px] text-rose-300 font-medium">{criticalOverlays} failing</span>
+              <span className="text-xs text-rose-300 font-medium">{criticalOverlays} failing</span>
             </>
           ) : warningOverlays > 0 ? (
             <>
               <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
-              <span className="text-[10.5px] text-amber-300 font-medium">{warningOverlays} SLA warning</span>
+              <span className="text-xs text-amber-300 font-medium">{warningOverlays} SLA warning</span>
             </>
           ) : (
             <>
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              <span className="text-[10.5px] text-emerald-300 font-medium">All healthy</span>
+              <span className="text-xs text-emerald-300 font-medium">All healthy</span>
             </>
           )}
         </div>

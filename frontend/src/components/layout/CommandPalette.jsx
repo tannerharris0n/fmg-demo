@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   LayoutGrid, Server, FileText, ShieldCheck, Share2, Zap,
   Code2, Settings, Search, AlertTriangle, Lock, Activity,
-  Link2, ShieldAlert, Package, Bug, MapPin, Keyboard,
+  Link2, ShieldAlert, Package, Bug, MapPin, Keyboard, Cloud, Network, Wifi, Calendar,
 } from 'lucide-react';
 import { useUiStore } from '../../stores/uiStore';
 import { useKeyboardShortcutsHelp } from '../../hooks/useKeyboardShortcuts';
@@ -24,6 +24,10 @@ const COMMANDS = [
     { label: 'CVE watchlist',    path: '/security/cve',      icon: Lock,       shortcut: 'g c' },
     { label: 'Drift alerts',     path: '/security/drift',    icon: AlertTriangle, shortcut: 'g r' },
     { label: 'Admin audit',      path: '/security/audit',    icon: ShieldCheck, shortcut: 'g u' },
+    { label: 'SASE',             path: '/sase',              icon: Cloud },
+    { label: 'Switches',         path: '/switches',          icon: Network },
+    { label: 'Access points',    path: '/aps',               icon: Wifi },
+    { label: 'Change calendar',  path: '/calendar',          icon: Calendar },
     { label: 'Tasks',            path: '/tasks',             icon: Zap,        shortcut: 'g k' },
     { label: 'Scripts',          path: '/scripts',           icon: Code2 },
     { label: 'Settings',         path: '/settings',          icon: Settings },
@@ -68,9 +72,9 @@ export function CommandPalette() {
     <div cmdk-overlay="" onClick={() => setOpen(false)}>
       <div cmdk-dialog="" onClick={(e) => e.stopPropagation()}>
         <Command label="Command menu" loop>
-          <Command.Input placeholder="Search devices, policies, objects, actions..." autoFocus />
+          <Command.Input placeholder="Jump to a page or run an action…" autoFocus />
           <Command.List>
-            <Command.Empty>No matches.</Command.Empty>
+            <Command.Empty>No matches. Try a device name, page, or action.</Command.Empty>
             {COMMANDS.map((group) => (
               <Command.Group key={group.group} heading={group.group}>
                 {group.items.map((item) => {
