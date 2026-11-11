@@ -55,7 +55,7 @@ export default function AdminAudit() {
   const { sorted, sort, toggle } = useSortable(filtered, { key: 'at', dir: 'desc' });
 
   const handleExport = () => {
-    toast.info('CSV export is read-only in demo', { detail: `${filtered.length} rows would be exported` });
+    toast.info('CSV export is disabled in this read-only demo', { detail: `${filtered.length} rows would be exported` });
   };
 
   const success = data.filter((r) => r.result === 'success').length;
@@ -65,8 +65,8 @@ export default function AdminAudit() {
   if (isLoading) return <div className="py-6 text-center text-ink-400 text-sm">Loading audit log...</div>;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Events"       value={data.length}  icon={ShieldCheck} iconTone="muted" />
         <KpiCard label="Successful"   value={success}      icon={ShieldCheck} iconTone="ok"     delta={`${Math.round(success / data.length * 100)}%`} deltaTone="ok" />
         <KpiCard label="Failed"       value={fail}         icon={ShieldCheck} iconTone="danger" delta="login attempts"     deltaTone="danger" />
@@ -87,14 +87,14 @@ export default function AdminAudit() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search admin, target, IP, detail..."
-              className="w-full bg-surface-800 border border-surface-600 rounded-md pl-8 pr-3 py-1.5 text-[12px] outline-none focus:border-accent placeholder:text-ink-400"
+              className="w-full bg-surface-800 border border-surface-600 rounded-md pl-8 pr-3 py-1.5 text-sm outline-none focus:border-accent placeholder:text-ink-400"
             />
           </div>
 
           <select
             value={action}
             onChange={(e) => setAction(e.target.value)}
-            className="bg-surface-800 border border-surface-600 rounded-md px-2.5 py-1.5 text-[12px] outline-none focus:border-accent"
+            className="bg-surface-800 border border-surface-600 rounded-md px-2.5 py-1.5 text-sm outline-none focus:border-accent"
           >
             {actions.map((a) => <option key={a} value={a}>{a}</option>)}
           </select>
@@ -105,7 +105,7 @@ export default function AdminAudit() {
                 key={r}
                 onClick={() => setResult(r)}
                 className={
-                  'text-[11px] px-2.5 py-1 rounded font-medium transition ' +
+                  'text-xs px-2.5 py-1 rounded font-medium transition ' +
                   (result === r ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200')
                 }
               >
@@ -116,8 +116,8 @@ export default function AdminAudit() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-[11.5px]">
-            <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+          <table className="w-full text-left text-sm">
+            <thead className="text-ink-400 text-xs border-b border-surface-600/60">
               <tr>
                 <SortableTh sortKey="at"     sort={sort} onToggle={toggle}>Time</SortableTh>
                 <SortableTh sortKey="admin"  sort={sort} onToggle={toggle}>Admin</SortableTh>

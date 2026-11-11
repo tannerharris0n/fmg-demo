@@ -15,10 +15,10 @@ function UserLoadMap({ locations }) {
       {locations.map((loc) => {
         const pct = (loc.users / max) * 100;
         return (
-          <div key={loc.city} className="flex items-center gap-3 text-[11.5px]">
+          <div key={loc.city} className="flex items-center gap-3 text-sm">
             <div className="w-28 shrink-0 flex items-center gap-1.5">
               <span className="text-ink-50 font-medium truncate">{loc.city}</span>
-              <span className="text-ink-600 uppercase text-[10px]">{loc.region}</span>
+              <span className="text-ink-600 uppercase text-2xs">{loc.region}</span>
             </div>
             <div className="flex-1 relative h-4 bg-surface-800 rounded">
               <div
@@ -26,7 +26,7 @@ function UserLoadMap({ locations }) {
                 style={{ width: `${pct}%` }}
               />
               <div className="absolute inset-0 flex items-center justify-end px-2">
-                <span className="tabular-nums text-[10.5px] font-medium">{loc.users}</span>
+                <span className="tabular-nums text-xs font-medium">{loc.users}</span>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ function PostureBar({ compliant, warning, nonCompliant }) {
         <div className="bg-amber-400"   style={{ width: `${w}%` }} />
         <div className="bg-rose-500"    style={{ width: `${n}%` }} />
       </div>
-      <div className="flex items-center gap-3 text-[11px] mt-1.5">
+      <div className="flex items-center gap-3 text-xs mt-1.5">
         <span className="inline-flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /><span className="text-ink-200 tabular-nums">{compliant} compliant</span></span>
         <span className="inline-flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-amber-400"   /><span className="text-ink-200 tabular-nums">{warning} warning</span></span>
         <span className="inline-flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-rose-500"    /><span className="text-ink-200 tabular-nums">{nonCompliant} non-compliant</span></span>
@@ -79,26 +79,26 @@ export default function Sase() {
   if (!data) return null;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Active users"        value={data.users.active}     icon={Users}    iconTone="info"    delta={`of ${data.users.licensed} licensed`} deltaTone="muted" />
         <KpiCard label="ZTNA sessions"       value={data.ztna.activeSessions} icon={Shield} iconTone="success" delta={`${data.ztna.apps} apps`}             deltaTone="muted" />
         <KpiCard label="SIA sessions 24h"    value={data.sia.sessions.toLocaleString()} icon={Activity} iconTone="info" delta={`${data.sia.blocksLast24h.toLocaleString()} blocked`} deltaTone="danger" />
         <KpiCard label="Private Access tunnels" value={`${data.spa.tunnelsUp}/${data.spa.gateways}`} icon={Globe} iconTone={data.spa.tunnelsDown ? 'danger' : 'success'} />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Tile title="Users by location" subtitle="active SASE clients" icon={Globe} className="col-span-2">
           <UserLoadMap locations={data.topLocations} />
           <div className="mt-4 pt-3 border-t border-surface-600/40 flex items-center justify-between">
-            <span className="text-[11px] text-ink-400">Trend, last 7 days</span>
+            <span className="text-xs text-ink-400">Trend, last 7 days</span>
             <UsageSparkline values={data.users.trend} />
           </div>
         </Tile>
 
         <Tile title="Client posture" subtitle="device health at login" icon={Shield}>
           <PostureBar {...data.posture} />
-          <div className="mt-3 text-[11px] text-ink-400 space-y-1">
+          <div className="mt-3 text-xs text-ink-400 space-y-1">
             <div className="flex items-center gap-1.5"><Check     className="h-3 w-3 text-emerald-400" strokeWidth={2} /> OS up to date, disk encrypted, EDR running</div>
             <div className="flex items-center gap-1.5"><AlertCircle className="h-3 w-3 text-amber-400" strokeWidth={2} /> Missing one posture signal</div>
             <div className="flex items-center gap-1.5"><Ban       className="h-3 w-3 text-rose-400"    strokeWidth={2} /> Blocked from ZTNA apps until remediated</div>
@@ -106,11 +106,11 @@ export default function Sase() {
         </Tile>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Tile title="Top apps" subtitle="sessions last 24h" icon={Activity}>
           <div className="divide-y divide-surface-600/30">
             {data.topApps.map((app) => (
-              <div key={app.name} className="flex items-center gap-3 py-2 text-[12px]">
+              <div key={app.name} className="flex items-center gap-3 py-2 text-sm">
                 <span className="flex-1 font-medium text-ink-50 truncate">{app.name}</span>
                 <Badge variant="neutral">{app.category}</Badge>
                 <span className="tabular-nums text-ink-200 w-16 text-right">{app.sessions.toLocaleString()}</span>
@@ -123,8 +123,8 @@ export default function Sase() {
         <Tile title="Top blocks" subtitle="URLs blocked last 24h" icon={Ban}>
           <div className="divide-y divide-surface-600/30">
             {data.topBlocks.map((b) => (
-              <div key={b.url} className="flex items-center gap-3 py-2 text-[12px]">
-                <span className="flex-1 font-mono text-[10.5px] text-ink-50 truncate">{b.url}</span>
+              <div key={b.url} className="flex items-center gap-3 py-2 text-sm">
+                <span className="flex-1 font-mono text-xs text-ink-50 truncate">{b.url}</span>
                 <Badge variant="danger">{b.category}</Badge>
                 <span className="tabular-nums text-rose-300 w-12 text-right font-medium">{b.hits}</span>
               </div>
@@ -134,8 +134,8 @@ export default function Sase() {
       </div>
 
       <Tile title="ZTNA applications" subtitle={`${ztna.length} published · click gateway to drill in`} icon={Shield}>
-        <table className="w-full text-left text-[12px]">
-          <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+        <table className="w-full text-left text-sm">
+          <thead className="text-ink-400 text-xs border-b border-surface-600/60">
             <tr>
               <th className="py-2 px-2 font-medium">App</th>
               <th className="py-2 px-2 font-medium">FQDN</th>
@@ -153,7 +153,7 @@ export default function Sase() {
                 <td className="py-2 px-2"><Badge variant={app.posture === 'strict' || app.posture === 'strict-ot' ? 'warning' : 'info'}>{app.posture}</Badge></td>
                 <td className="py-2 px-2 text-ink-200">{app.gateway}</td>
                 <td className="py-2 px-2 text-right tabular-nums">{app.sessions}</td>
-                <td className="py-2 px-2 text-ink-400 text-[11px]">{relMin(app.lastUsed)}</td>
+                <td className="py-2 px-2 text-ink-400 text-xs">{relMin(app.lastUsed)}</td>
               </tr>
             ))}
           </tbody>

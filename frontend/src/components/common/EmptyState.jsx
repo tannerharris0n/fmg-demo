@@ -3,11 +3,13 @@ import { Inbox } from 'lucide-react';
 
 export function EmptyState({ icon: Icon = Inbox, title, hint, action, className }) {
   return (
-    <div className={clsx('py-10 px-6 text-center', className)}>
-      <Icon className="h-6 w-6 mx-auto mb-3 text-ink-400" strokeWidth={1.4} />
-      <div className="text-[13px] text-ink-200 font-medium">{title}</div>
-      {hint && <div className="text-[12px] text-ink-400 mt-1">{hint}</div>}
-      {action && <div className="mt-4">{action}</div>}
+    <div className={clsx('py-12 px-6 text-center', className)}>
+      <span className="mx-auto mb-3 h-10 w-10 grid place-items-center rounded-xl bg-surface-800 ring-1 ring-inset ring-surface-600">
+        <Icon className="h-5 w-5 text-ink-400" strokeWidth={1.5} />
+      </span>
+      <div className="text-base text-ink-50 font-medium">{title}</div>
+      {hint && <div className="text-sm text-ink-400 mt-1 max-w-sm mx-auto">{hint}</div>}
+      {action && <div className="mt-5 flex justify-center">{action}</div>}
     </div>
   );
 }

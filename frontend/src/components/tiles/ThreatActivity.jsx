@@ -10,7 +10,7 @@ export function ThreatActivity({ data }) {
     <Tile title="Threat activity" subtitle="last 24h" icon={Activity} to="/security/threats">
       <div className="flex items-baseline justify-between mb-2">
         <div className="text-[22px] font-semibold tabular-nums">{total24h.toLocaleString()}</div>
-        <div className="text-[11px] text-ink-400">blocks</div>
+        <div className="text-xs text-ink-400">blocks</div>
       </div>
       <div className="h-12 -mx-1 mb-3">
         <ResponsiveContainer width="100%" height="100%">
@@ -31,11 +31,11 @@ export function ThreatActivity({ data }) {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      <ul className="space-y-1 text-[11px]">
+      <ul className="space-y-1 text-xs">
         {top.map((t) => (
           <li key={t.name} className="flex items-center justify-between">
             <span className="text-ink-200 truncate">
-              <span className="text-ink-400 text-[10px] mr-1.5">{t.category}</span>
+              <span className="text-ink-400 text-2xs mr-1.5">{t.category}</span>
               {t.name}
             </span>
             <span className="code">{t.count.toLocaleString()}</span>

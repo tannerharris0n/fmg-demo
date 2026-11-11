@@ -27,7 +27,7 @@ const TYPE_TONE = {
 function SummaryCard({ label, value, tone = 'text-ink-50' }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2.5">
-      <div className="text-[10.5px] text-ink-400">{label}</div>
+      <div className="text-xs text-ink-400">{label}</div>
       <div className={clsx('text-[20px] font-semibold tabular-nums leading-tight mt-1', tone)}>
         {value}
       </div>
@@ -58,7 +58,7 @@ export default function PolicyAnalyzer() {
   const types = ['all', ...new Set(data.findings.map((f) => f.type))];
 
   return (
-    <div className="space-y-3 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       <Tile
         title="Policy analyzer"
         subtitle={`${data.findings.length} findings across packages`}
@@ -80,7 +80,7 @@ export default function PolicyAnalyzer() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search rule, package, note..."
-              className="w-full bg-surface-800 border border-surface-600 rounded-md pl-8 pr-3 py-1.5 text-[12px] outline-none focus:border-accent placeholder:text-ink-400"
+              className="w-full bg-surface-800 border border-surface-600 rounded-md pl-8 pr-3 py-1.5 text-sm outline-none focus:border-accent placeholder:text-ink-400"
             />
           </div>
           <div className="flex items-center gap-1 bg-surface-800 rounded-md p-1 border border-surface-600">
@@ -90,7 +90,7 @@ export default function PolicyAnalyzer() {
                 key={t}
                 onClick={() => setFilter(t)}
                 className={clsx(
-                  'text-[11px] px-2 py-0.5 rounded transition',
+                  'text-xs px-2 py-0.5 rounded transition',
                   filter === t
                     ? 'bg-surface-700 text-ink-50 font-medium'
                     : 'text-ink-400 hover:text-ink-200',
@@ -115,8 +115,8 @@ export default function PolicyAnalyzer() {
                       <span className="code">{f.rule}</span>
                       <Badge variant="neutral">in {f.package}</Badge>
                     </div>
-                    <div className="text-[12px] text-ink-200">{f.note}</div>
-                    <div className="text-[11px] text-ink-400 mt-1">
+                    <div className="text-sm text-ink-200">{f.note}</div>
+                    <div className="text-xs text-ink-400 mt-1">
                       <span className="text-ink-600">Suggested:</span> {f.suggestion}
                     </div>
                   </div>

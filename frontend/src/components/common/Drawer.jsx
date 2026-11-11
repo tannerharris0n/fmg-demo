@@ -41,8 +41,8 @@ export function Drawer({ open, onClose, title, subtitle, width = 'md', footer, c
       >
         <header className="flex items-start justify-between px-5 py-4 border-b border-surface-600/60">
           <div className="min-w-0">
-            <div className="text-[14px] font-semibold leading-tight">{title}</div>
-            {subtitle && <div className="text-[11.5px] text-ink-400 mt-1">{subtitle}</div>}
+            <div className="text-md font-semibold leading-tight">{title}</div>
+            {subtitle && <div className="text-sm text-ink-400 mt-1">{subtitle}</div>}
           </div>
           <button
             onClick={onClose}

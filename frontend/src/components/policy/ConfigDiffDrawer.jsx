@@ -79,11 +79,11 @@ export function ConfigDiffDrawer({ packageName, installAt, open, onClose }) {
       subtitle={data ? `${data.revisionFrom} → ${data.revisionTo}` : ''}
       width="xl"
     >
-      {isLoading && <div className="text-[12px] text-ink-400">Loading diff...</div>}
+      {isLoading && <div className="text-sm text-ink-400">Loading diff...</div>}
       {data && (
         <div className="space-y-4">
           {/* Header row with metadata */}
-          <div className="flex items-center gap-3 flex-wrap text-[12px]">
+          <div className="flex items-center gap-3 flex-wrap text-sm">
             <span className="inline-flex items-center gap-1.5 text-ink-400">
               <GitCompare className="h-3 w-3" strokeWidth={1.8} />
               <span className="code">{data.revisionFrom}</span>
@@ -105,18 +105,18 @@ export function ConfigDiffDrawer({ packageName, installAt, open, onClose }) {
           </div>
 
           {/* Summary */}
-          <div className="bg-surface-800 border border-surface-600/60 rounded-md px-3 py-2 text-[12px] text-ink-200">
-            <span className="text-ink-400 text-[10.5px] uppercase tracking-wider mr-2">Summary</span>
+          <div className="bg-surface-800 border border-surface-600/60 rounded-md px-3 py-2 text-sm text-ink-200">
+            <span className="text-ink-400 text-xs uppercase tracking-wider mr-2">Summary</span>
             {data.summary}
           </div>
 
           {/* Diff body */}
           <div className="rounded-md overflow-hidden border border-surface-600/60 bg-surface-950">
-            <div className="flex items-center justify-between px-3 py-1.5 border-b border-surface-600/60 bg-surface-900 text-[10.5px] text-ink-400 uppercase tracking-wider">
+            <div className="flex items-center justify-between px-3 py-1.5 border-b border-surface-600/60 bg-surface-900 text-xs text-ink-400 uppercase tracking-wider">
               <span>Unified diff</span>
-              <span className="font-mono normal-case text-[10px] text-ink-600">FortiOS CLI</span>
+              <span className="font-mono normal-case text-2xs text-ink-600">FortiOS CLI</span>
             </div>
-            <div className="font-mono text-[11.5px] leading-[1.55] py-1">
+            <div className="font-mono text-sm leading-[1.55] py-1">
               {lines.map((l, i) => {
                 const bg = l.kind === 'add' ? 'bg-emerald-500/10 border-l-2 border-emerald-500/60'
                          : l.kind === 'del' ? 'bg-rose-500/10 border-l-2 border-rose-500/60'
@@ -125,8 +125,8 @@ export function ConfigDiffDrawer({ packageName, installAt, open, onClose }) {
                 const signColor = l.kind === 'add' ? 'text-emerald-400' : l.kind === 'del' ? 'text-rose-400' : 'text-ink-600';
                 return (
                   <div key={i} className={`flex ${bg} hover:bg-surface-800/40`}>
-                    <div className="shrink-0 w-10 px-2 text-right text-ink-600 text-[10.5px] tabular-nums select-none">{l.a ?? ''}</div>
-                    <div className="shrink-0 w-10 px-2 text-right text-ink-600 text-[10.5px] tabular-nums select-none">{l.b ?? ''}</div>
+                    <div className="shrink-0 w-10 px-2 text-right text-ink-600 text-xs tabular-nums select-none">{l.a ?? ''}</div>
+                    <div className="shrink-0 w-10 px-2 text-right text-ink-600 text-xs tabular-nums select-none">{l.b ?? ''}</div>
                     <div className={`shrink-0 w-4 text-center ${signColor}`}>{sign}</div>
                     <div className="flex-1 min-w-0 pr-3 whitespace-pre overflow-x-auto">{highlight(l.line)}</div>
                   </div>
@@ -135,7 +135,7 @@ export function ConfigDiffDrawer({ packageName, installAt, open, onClose }) {
             </div>
           </div>
 
-          <p className="text-[10.5px] text-ink-400">
+          <p className="text-xs text-ink-400">
             This diff shows the FortiOS CLI config that was pushed for this install. Additions highlighted green, removals red, unchanged lines dim.
           </p>
         </div>

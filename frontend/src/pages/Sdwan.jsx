@@ -34,10 +34,10 @@ function OverlayRow({ overlay, onOpen }) {
         <Icon className={clsx('h-4 w-4 shrink-0', iconClass)} strokeWidth={1.7} />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="text-[13px] font-semibold text-ink-50 truncate">{overlay.name}</span>
+            <span className="text-base font-semibold text-ink-50 truncate">{overlay.name}</span>
             {overlay.status === 'standby' && <Badge variant="neutral">standby</Badge>}
           </div>
-          <div className="text-[11px] text-ink-400 mt-0.5 flex flex-wrap gap-x-3">
+          <div className="text-xs text-ink-400 mt-0.5 flex flex-wrap gap-x-3">
             {overlay.latencyMs != null && <span>latency <span className="text-ink-200 tabular-nums">{overlay.latencyMs}ms</span></span>}
             {overlay.jitterMs != null && <span>jitter <span className="text-ink-200 tabular-nums">{overlay.jitterMs}ms</span></span>}
             {overlay.lossPct != null && <span>loss <span className="text-ink-200 tabular-nums">{overlay.lossPct}%</span></span>}
@@ -67,10 +67,10 @@ function OverlayDrawer({ name, open, onClose }) {
       subtitle={data ? `${data.peer} · ${data.bandwidth}` : 'Loading...'}
       width="lg"
     >
-      {isLoading && <div className="text-[12px] text-ink-400">Loading overlay metrics...</div>}
+      {isLoading && <div className="text-sm text-ink-400">Loading overlay metrics...</div>}
       {data && (
         <div className="space-y-5">
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard label="SLA"        value={data.sla != null ? `${data.sla}%` : '—'} />
             <MetricCard label="Latency"    value={data.latencyMs != null ? `${data.latencyMs}ms` : '—'} />
             <MetricCard label="Jitter"     value={data.jitterMs != null ? `${data.jitterMs}ms` : '—'} />
@@ -78,14 +78,14 @@ function OverlayDrawer({ name, open, onClose }) {
           </div>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2">Latency · 24h</h3>
+            <h3 className="text-sm font-semibold mb-2">Latency · 24h</h3>
             <div className="h-36 bg-surface-800 rounded-md p-3">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data.points}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2A3039" />
-                  <XAxis dataKey="hour" tick={{ fill: '#8A919C', fontSize: 10 }} axisLine={{ stroke: '#2A3039' }} tickLine={false} />
-                  <YAxis tick={{ fill: '#8A919C', fontSize: 10 }} axisLine={{ stroke: '#2A3039' }} tickLine={false} width={30} />
-                  <Tooltip contentStyle={{ background: '#11141A', border: '1px solid #2A3039', borderRadius: 6, fontSize: 11 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#283040" />
+                  <XAxis dataKey="hour" tick={{ fill: '#939BA8', fontSize: 11 }} axisLine={{ stroke: '#283040' }} tickLine={false} />
+                  <YAxis tick={{ fill: '#939BA8', fontSize: 11 }} axisLine={{ stroke: '#283040' }} tickLine={false} width={30} />
+                  <Tooltip contentStyle={{ background: '#10131A', border: '1px solid #283040', borderRadius: 6, fontSize: 12 }} />
                   <Line type="monotone" dataKey="latency" stroke="#378ADD" strokeWidth={1.5} dot={false} />
                 </LineChart>
               </ResponsiveContainer>
@@ -93,17 +93,17 @@ function OverlayDrawer({ name, open, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2">SLA targets</h3>
+            <h3 className="text-sm font-semibold mb-2">SLA targets</h3>
             <ul className="divide-y divide-surface-600/40 bg-surface-800 rounded-md px-3">
               {data.slaTargets.map((t) => (
-                <li key={t.id} className="flex items-center justify-between py-2 text-[12px]">
+                <li key={t.id} className="flex items-center justify-between py-2 text-sm">
                   <span className="flex items-center gap-2">
                     {t.met
                       ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" strokeWidth={1.8} />
                       : <XCircle className="h-3.5 w-3.5 text-rose-400" strokeWidth={1.8} />}
                     <span className="text-ink-50 font-medium">{t.name}</span>
                   </span>
-                  <span className="text-[11px] text-ink-400 tabular-nums">
+                  <span className="text-xs text-ink-400 tabular-nums">
                     latency ≤ {t.maxLatency}ms · jitter ≤ {t.maxJitter}ms · loss ≤ {t.maxLoss}%
                   </span>
                 </li>
@@ -112,16 +112,16 @@ function OverlayDrawer({ name, open, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2">Member interfaces</h3>
+            <h3 className="text-sm font-semibold mb-2">Member interfaces</h3>
             <ul className="bg-surface-800 rounded-md px-3 divide-y divide-surface-600/40">
               {data.members.map((m) => (
-                <li key={m.device + m.iface} className="flex items-center justify-between py-2 text-[12px]">
+                <li key={m.device + m.iface} className="flex items-center justify-between py-2 text-sm">
                   <span className="flex items-center gap-2">
                     <Chip variant={m.state === 'up' ? 'success' : 'danger'}>{m.state}</Chip>
                     <span className="text-ink-50">{m.device}</span>
                     <span className="code">{m.iface}</span>
                   </span>
-                  <span className="text-[11px] text-ink-400 tabular-nums">
+                  <span className="text-xs text-ink-400 tabular-nums">
                     <span className="text-emerald-400">{m.txMbps}</span>tx · <span className="text-sky-400">{m.rxMbps}</span>rx Mbps
                   </span>
                 </li>
@@ -130,12 +130,12 @@ function OverlayDrawer({ name, open, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-[12px] font-semibold mb-2">Rules using this overlay</h3>
+            <h3 className="text-sm font-semibold mb-2">Rules using this overlay</h3>
             <ul className="bg-surface-800 rounded-md px-3 divide-y divide-surface-600/40">
               {data.rules.map((r) => (
-                <li key={r.id} className="flex items-center justify-between py-2 text-[12px]">
+                <li key={r.id} className="flex items-center justify-between py-2 text-sm">
                   <span className="text-ink-50">{r.name}</span>
-                  <span className="text-[11px] text-ink-400">
+                  <span className="text-xs text-ink-400">
                     <span className="tabular-nums">{r.matches.toLocaleString()}</span> matches · last steer <span className="code">{r.lastSteer}</span>
                   </span>
                 </li>
@@ -151,7 +151,7 @@ function OverlayDrawer({ name, open, onClose }) {
 function MetricCard({ label, value }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2">
-      <div className="text-[10.5px] text-ink-400">{label}</div>
+      <div className="text-xs text-ink-400">{label}</div>
       <div className="text-[18px] font-semibold tabular-nums mt-0.5">{value}</div>
     </div>
   );
@@ -169,8 +169,8 @@ export default function Sdwan() {
   const danger = data.overlays.filter((o) => o.status === 'danger').length;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Average SLA"  value={data.avgSla} suffix="%" icon={Activity} iconTone="info" delta="rolling 24h" deltaTone="muted" />
         <KpiCard label="Overlays OK"  value={ok}     icon={CheckCircle2}  iconTone="ok"      />
         <KpiCard label="At risk"       value={warn}   icon={AlertTriangle} iconTone="warning" delta="needs review" deltaTone="warning" />

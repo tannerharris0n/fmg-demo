@@ -28,7 +28,7 @@ export function PolicyHeatmap({ data }) {
           />
         ))}
       </div>
-      <div className="flex flex-wrap gap-3 text-[11px] text-ink-400">
+      <div className="flex flex-wrap gap-3 text-xs text-ink-400">
         <Legend swatch="bg-emerald-500" tone="text-emerald-400" count={summary.active + summary.heavy} label="active" />
         <Legend swatch="bg-rose-500"    tone="text-rose-400"    count={summary.dead} label="dead" />
         <Legend swatch="bg-surface-500" tone="text-ink-400"     count={summary.low}  label="low use" />

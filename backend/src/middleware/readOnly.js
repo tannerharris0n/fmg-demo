@@ -6,7 +6,7 @@ function readOnly(req, res, next) {
   const m = req.method.toUpperCase();
   if (m === 'GET' || m === 'HEAD' || m === 'OPTIONS') return next();
   return res.status(403).json({
-    error: 'This is a read-only demo. Mutations are disabled.',
+    error: 'This is a read-only demo. Changes are disabled.',
     demo: true,
   });
 }

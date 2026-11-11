@@ -20,23 +20,23 @@ function useDriftList() {
 function DiffRow({ diff }) {
   return (
     <li className="py-3 first:pt-0 last:pb-0 border-b border-surface-600/40 last:border-0">
-      <div className="text-[11px] text-ink-400 font-mono">{diff.path}</div>
+      <div className="text-xs text-ink-400 font-mono">{diff.path}</div>
       <div className="mt-2 grid grid-cols-2 gap-2">
         <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-md px-3 py-2">
-          <div className="text-[10px] uppercase tracking-wide text-emerald-400 mb-1">Package (intent)</div>
-          <div className="text-[12px] text-ink-50 font-mono break-all">
+          <div className="text-2xs uppercase tracking-wide text-emerald-400 mb-1">Package (intent)</div>
+          <div className="text-sm text-ink-50 font-mono break-all">
             {diff.package || <span className="text-ink-600">(empty)</span>}
           </div>
         </div>
         <div className="bg-rose-500/5 border border-rose-500/20 rounded-md px-3 py-2">
-          <div className="text-[10px] uppercase tracking-wide text-rose-400 mb-1">Live (on device)</div>
-          <div className="text-[12px] text-ink-50 font-mono break-all">
+          <div className="text-2xs uppercase tracking-wide text-rose-400 mb-1">Live (on device)</div>
+          <div className="text-sm text-ink-50 font-mono break-all">
             {diff.live || <span className="text-ink-600">(empty)</span>}
           </div>
         </div>
       </div>
       {diff.note && (
-        <div className="text-[11px] text-ink-400 mt-2">{diff.note}</div>
+        <div className="text-xs text-ink-400 mt-2">{diff.note}</div>
       )}
     </li>
   );
@@ -59,7 +59,7 @@ export default function Drift() {
   return (
     <div className="grid grid-cols-[220px_1fr] gap-3 animate-fade-in">
       <aside className="tile p-2 h-fit">
-        <div className="text-[11px] uppercase tracking-widest text-ink-600 px-2 py-1.5">
+        <div className="text-xs uppercase tracking-widest text-ink-600 px-2 py-1.5">
           Diverged devices
         </div>
         <ul className="space-y-0.5">
@@ -67,7 +67,7 @@ export default function Drift() {
             <li key={d.device}>
               <button
                 onClick={() => setSelected(d.device)}
-                className={`w-full flex items-center justify-between px-2 py-1.5 rounded text-[12px] transition ${
+                className={`w-full flex items-center justify-between px-2 py-1.5 rounded text-sm transition ${
                   activeDevice === d.device
                     ? 'bg-surface-700 text-ink-50 font-medium'
                     : 'text-ink-200 hover:bg-surface-800'
@@ -91,7 +91,7 @@ export default function Drift() {
               {activeDevice && (
                 <Link
                   to={`/devices/${encodeURIComponent(activeDevice)}`}
-                  className="inline-flex items-center gap-1 text-[11px] text-ink-400 hover:text-sky-300 transition"
+                  className="inline-flex items-center gap-1 text-xs text-ink-400 hover:text-sky-300 transition"
                 >
                   <ExternalLink className="h-3 w-3" strokeWidth={1.8} />
                   View device
@@ -99,13 +99,13 @@ export default function Drift() {
               )}
               <Button
                 size="sm" variant="ghost" icon={RotateCcw}
-                onClick={() => toast.info('Pull is read-only in demo', { detail: `Would pull live config from ${activeDevice} into package` })}
+                onClick={() => toast.info('Pulling config is disabled in this read-only demo', { detail: `Would pull live config from ${activeDevice} into package` })}
               >
                 Pull live into package
               </Button>
               <Button
                 size="sm" variant="primary" icon={Rocket}
-                onClick={() => toast.info('Push is read-only in demo', { detail: `Would push package to ${activeDevice}` })}
+                onClick={() => toast.info('Pushing to devices is disabled in this read-only demo', { detail: `Would push package to ${activeDevice}` })}
               >
                 Push package to device
               </Button>
@@ -113,7 +113,7 @@ export default function Drift() {
           )
         }
       >
-        {isLoading && <div className="text-[12px] text-ink-400 animate-pulse">Loading diff...</div>}
+        {isLoading && <div className="text-sm text-ink-400 animate-pulse">Loading diff...</div>}
         {detail && (
           <ul>
             {detail.diffs.map((d, i) => <DiffRow key={i} diff={d} />)}

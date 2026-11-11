@@ -39,12 +39,12 @@ function IpsecTab() {
     traffic: (r) => r.bytesIn + r.bytesOut,
   });
 
-  if (isLoading) return <div className="text-[12px] text-ink-400 py-6 text-center">Loading tunnels...</div>;
+  if (isLoading) return <div className="text-sm text-ink-400 py-6 text-center">Loading tunnels...</div>;
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left text-[12px]">
-        <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+      <table className="w-full text-left text-sm">
+        <thead className="text-ink-400 text-xs border-b border-surface-600/60">
           <tr>
             <SortableTh sortKey="status"    sort={sort} onToggle={toggle}>Status</SortableTh>
             <SortableTh sortKey="name"      sort={sort} onToggle={toggle}>Tunnel</SortableTh>
@@ -62,7 +62,7 @@ function IpsecTab() {
               </td>
               <td className="py-2 px-2">
                 <div className="font-medium text-ink-50">{t.name}</div>
-                {t.note && <div className="text-[10.5px] text-rose-400 mt-0.5">{t.note}</div>}
+                {t.note && <div className="text-xs text-rose-400 mt-0.5">{t.note}</div>}
               </td>
               <td className="py-2 px-2 text-ink-400"><span className="code">{t.remoteGw}</span></td>
               <td className="py-2 px-2">
@@ -105,7 +105,7 @@ function SslTab() {
     traffic: (r) => r.bytesIn + r.bytesOut,
   });
 
-  if (isLoading) return <div className="text-[12px] text-ink-400 py-6 text-center">Loading sessions...</div>;
+  if (isLoading) return <div className="text-sm text-ink-400 py-6 text-center">Loading sessions...</div>;
 
   return (
     <>
@@ -116,12 +116,12 @@ function SslTab() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search user, group, source IP..."
-          className="w-full bg-surface-800 border border-surface-600 rounded-md pl-8 pr-3 py-1.5 text-[12px] outline-none focus:border-accent placeholder:text-ink-400"
+          className="w-full bg-surface-800 border border-surface-600 rounded-md pl-8 pr-3 py-1.5 text-sm outline-none focus:border-accent placeholder:text-ink-400"
         />
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-[12px]">
-          <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+        <table className="w-full text-left text-sm">
+          <thead className="text-ink-400 text-xs border-b border-surface-600/60">
             <tr>
               <SortableTh sortKey="user"        sort={sort} onToggle={toggle}>User</SortableTh>
               <SortableTh sortKey="group"       sort={sort} onToggle={toggle}>Group</SortableTh>
@@ -160,8 +160,8 @@ export default function VpnTunnels() {
   const down = ipsec.filter((t) => t.status === 'down').length;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="IPsec up"       value={up}                 icon={Link2} iconTone="ok" suffix={` / ${ipsec.length}`} />
         <KpiCard label="IPsec down"     value={down}               icon={Link2} iconTone={down ? 'danger' : 'muted'} />
         <KpiCard label="SSL-VPN users"  value={ssl?.active ?? 0}   icon={Users} iconTone="info" delta="active now" deltaTone="info" />
@@ -182,7 +182,7 @@ export default function VpnTunnels() {
                 key={t}
                 onClick={() => setTab(t)}
                 className={clsx(
-                  'px-3 py-1 text-[11.5px] font-medium rounded transition',
+                  'px-3 py-1 text-sm font-medium rounded transition',
                   tab === t ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200'
                 )}
               >

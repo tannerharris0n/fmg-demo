@@ -49,8 +49,8 @@ export default function Threats() {
   }, [events, query, sev]);
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Blocked 24h"        value={(activity?.total24h ?? 0).toLocaleString()} icon={ShieldAlert} iconTone="info"    delta="all categories" deltaTone="muted" />
         <KpiCard label="Unique sources"     value={sources.length}                              icon={Globe2}     iconTone="warning" />
         <KpiCard label="Unique targets"     value={targets.length}                              icon={Target}     iconTone="info" />
@@ -67,22 +67,22 @@ export default function Threats() {
                   <stop offset="100%" stopColor="#378ADD" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="hour" tick={{ fill: '#8A919C', fontSize: 10 }} axisLine={{ stroke: '#2A3039' }} tickLine={false} />
-              <YAxis tick={{ fill: '#8A919C', fontSize: 10 }} axisLine={{ stroke: '#2A3039' }} tickLine={false} width={30} />
-              <Tooltip contentStyle={{ background: '#11141A', border: '1px solid #2A3039', borderRadius: 6, fontSize: 11 }} />
+              <XAxis dataKey="hour" tick={{ fill: '#939BA8', fontSize: 11 }} axisLine={{ stroke: '#283040' }} tickLine={false} />
+              <YAxis tick={{ fill: '#939BA8', fontSize: 11 }} axisLine={{ stroke: '#283040' }} tickLine={false} width={30} />
+              <Tooltip contentStyle={{ background: '#10131A', border: '1px solid #283040', borderRadius: 6, fontSize: 12 }} />
               <Area type="monotone" dataKey="count" stroke="#378ADD" strokeWidth={1.5} fill="url(#thrG)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
       </Tile>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Tile title="Top sources" subtitle="attackers" icon={Globe2}>
           <ul className="divide-y divide-surface-600/40">
             {sources.map((s) => (
-              <li key={s.ip} className="py-2 flex items-center justify-between text-[12px]">
+              <li key={s.ip} className="py-2 flex items-center justify-between text-sm">
                 <span className="flex items-center gap-2">
-                  <span className="text-[10px] text-ink-400 font-mono uppercase bg-surface-800 px-1.5 py-0.5 rounded">{s.country}</span>
+                  <span className="text-2xs text-ink-400 font-mono uppercase bg-surface-800 px-1.5 py-0.5 rounded">{s.country}</span>
                   <span className="code">{s.ip}</span>
                 </span>
                 <span className="text-ink-400 tabular-nums">
@@ -96,12 +96,12 @@ export default function Threats() {
         <Tile title="Top targets" subtitle="attacked hosts" icon={Target}>
           <ul className="divide-y divide-surface-600/40">
             {targets.map((t) => (
-              <li key={t.host} className="py-2 text-[12px]">
+              <li key={t.host} className="py-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="font-medium">{t.host}</span>
                   <span className="tabular-nums text-rose-400 font-medium">{t.count}</span>
                 </div>
-                <div className="text-[10.5px] text-ink-400 mt-0.5 flex gap-1.5">
+                <div className="text-xs text-ink-400 mt-0.5 flex gap-1.5">
                   <span className="code">{t.ip}</span>
                   <span>·</span>
                   <span>{t.categories.join(', ')}</span>
@@ -125,7 +125,7 @@ export default function Threats() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
-                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-[11.5px] outline-none focus:border-accent w-40"
+                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-sm outline-none focus:border-accent w-40"
               />
             </div>
             <div className="inline-flex bg-surface-800 rounded-md p-0.5 gap-0.5 ring-1 ring-surface-600/60">
@@ -134,7 +134,7 @@ export default function Threats() {
                   key={s}
                   onClick={() => setSev(s)}
                   className={
-                    'text-[10.5px] px-2 py-0.5 rounded font-medium transition ' +
+                    'text-xs px-2 py-0.5 rounded font-medium transition ' +
                     (sev === s ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200')
                   }
                 >
@@ -157,8 +157,8 @@ function ThreatEventTable({ rows }) {
   return (
     <>
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-[11.5px]">
-          <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+        <table className="w-full text-left text-sm">
+          <thead className="text-ink-400 text-xs border-b border-surface-600/60">
             <tr>
               <SortableTh sortKey="at"        sort={sort} onToggle={toggle}>Time</SortableTh>
               <SortableTh sortKey="severity"  sort={sort} onToggle={toggle}>Sev</SortableTh>
@@ -174,11 +174,11 @@ function ThreatEventTable({ rows }) {
                 <td className="py-1.5 px-2 text-ink-400 tabular-nums whitespace-nowrap">{relTime(e.at)}</td>
                 <td className="py-1.5 px-2"><Chip variant={sevTone(e.severity)}>{e.severity}</Chip></td>
                 <td className="py-1.5 px-2">
-                  <span className="text-[10px] text-ink-400 uppercase tracking-wider mr-1.5">{e.category}</span>
+                  <span className="text-2xs text-ink-400 uppercase tracking-wider mr-1.5">{e.category}</span>
                   <span className="font-medium">{e.signature}</span>
                 </td>
                 <td className="py-1.5 px-2">
-                  <span className="text-[10px] text-ink-400 font-mono uppercase bg-surface-800 px-1 rounded mr-1">{e.sourceCountry}</span>
+                  <span className="text-2xs text-ink-400 font-mono uppercase bg-surface-800 px-1 rounded mr-1">{e.sourceCountry}</span>
                   <span className="code">{e.sourceIp}</span>
                 </td>
                 <td className="py-1.5 px-2">
@@ -191,7 +191,7 @@ function ThreatEventTable({ rows }) {
         </table>
       </div>
       {rows.length > 25 && (
-        <div className="text-center text-[11px] text-ink-400 mt-3">
+        <div className="text-center text-xs text-ink-400 mt-3">
           Showing first 25 of {rows.length}. Refine search to narrow.
         </div>
       )}

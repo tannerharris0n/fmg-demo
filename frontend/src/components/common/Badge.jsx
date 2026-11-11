@@ -11,7 +11,7 @@ const VARIANT = {
 export function Badge({ variant = 'neutral', children, className }) {
   return (
     <span className={clsx(
-      'inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full ring-1 ring-inset tabular-nums',
+      'inline-flex items-center gap-1 text-2xs font-medium px-2 py-0.5 rounded-full ring-1 ring-inset tabular-nums',
       VARIANT[variant],
       className,
     )}>

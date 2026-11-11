@@ -10,8 +10,8 @@ import { useUiStore } from '../stores/uiStore';
 function Row({ label, value, mono }) {
   return (
     <div className="flex items-start justify-between gap-4 py-2 border-b border-surface-600/40 last:border-0">
-      <span className="text-[12px] text-ink-400">{label}</span>
-      <span className={`text-[12.5px] text-ink-200 ${mono ? 'font-mono text-[11.5px]' : ''} text-right`}>{value}</span>
+      <span className="text-sm text-ink-400">{label}</span>
+      <span className={`text-base text-ink-200 ${mono ? 'font-mono text-sm' : ''} text-right`}>{value}</span>
     </div>
   );
 }
@@ -33,8 +33,8 @@ function FmgInfoCard({ fmg }) {
 function AdomsCard({ adoms }) {
   return (
     <Tile title="ADOMs" subtitle={`${adoms.length} administrative domains`} icon={Database}>
-      <table className="w-full text-left text-[12px]">
-        <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+      <table className="w-full text-left text-sm">
+        <thead className="text-ink-400 text-xs border-b border-surface-600/60">
           <tr>
             <th className="py-2 pr-2 font-medium">Name</th>
             <th className="py-2 px-2 font-medium text-right">Devices</th>
@@ -68,8 +68,8 @@ function AppearanceCard() {
     <Tile title="Appearance" icon={SettingsIcon}>
       <div className="flex items-center justify-between py-2 border-b border-surface-600/40">
         <div>
-          <div className="text-[12px] font-medium">Dashboard preset</div>
-          <div className="text-[11px] text-ink-400 mt-0.5">Switch between network- and security-focused layouts</div>
+          <div className="text-sm font-medium">Dashboard preset</div>
+          <div className="text-xs text-ink-400 mt-0.5">Switch between network- and security-focused layouts</div>
         </div>
         <div className="inline-flex bg-surface-800 rounded-md p-1 gap-0.5 ring-1 ring-surface-600/60">
           {[
@@ -79,7 +79,7 @@ function AppearanceCard() {
             <button
               key={v}
               onClick={() => setPreset(v)}
-              className={`flex items-center gap-1 px-2.5 py-1 text-[11.5px] font-medium rounded transition ${
+              className={`flex items-center gap-1 px-2.5 py-1 text-sm font-medium rounded transition ${
                 preset === v ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200'
               }`}
             >
@@ -91,8 +91,8 @@ function AppearanceCard() {
       </div>
       <div className="flex items-center justify-between py-2">
         <div>
-          <div className="text-[12px] font-medium">Theme</div>
-          <div className="text-[11px] text-ink-400 mt-0.5">Dark mode — light mode is planned for v0.7</div>
+          <div className="text-sm font-medium">Theme</div>
+          <div className="text-xs text-ink-400 mt-0.5">Dark. A light theme is on the roadmap.</div>
         </div>
         <Badge variant="neutral">Dark</Badge>
       </div>
@@ -104,7 +104,7 @@ function ShortcutsCard() {
   const { setOpen } = useKeyboardShortcutsHelp();
   return (
     <Tile title="Keyboard shortcuts" icon={Keyboard}>
-      <div className="text-[12px] text-ink-400 mb-3 leading-relaxed">
+      <div className="text-sm text-ink-400 mb-3 leading-relaxed">
         Navigate faster with two-key prefixes like <span className="kbd">g</span> <span className="kbd">d</span> for
         Dashboard or <span className="kbd">g</span> <span className="kbd">s</span> for SD-WAN. Press <span className="kbd">?</span> anywhere
         to see the full list.
@@ -131,7 +131,7 @@ function AboutCard({ about }) {
             href={about.docs}
             target="_blank"
             rel="noreferrer"
-            className="text-sky-400 hover:text-sky-300 inline-flex items-center gap-1 text-[12px]"
+            className="text-sky-400 hover:text-sky-300 inline-flex items-center gap-1 text-sm"
           >
             <ExternalLink className="h-3 w-3" strokeWidth={1.8} />
             FortiManager API
@@ -147,15 +147,15 @@ export default function Settings() {
   if (isLoading || !data) return <div className="py-6 text-center text-ink-400 text-sm">Loading settings...</div>;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-2 gap-3">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <FmgInfoCard fmg={data.fmg} />
         <AdomsCard adoms={data.adoms} />
       </div>
 
       <FmgApiIntegration />
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <AppearanceCard />
         <ShortcutsCard />
       </div>

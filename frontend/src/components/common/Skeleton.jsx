@@ -95,11 +95,11 @@ export function SkeletonDashboard() {
     <div className="space-y-3">
       <SkeletonKpis />
       <SkeletonTile height={180} />
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SkeletonTile />
         <SkeletonTile />
       </div>
-      <div className="grid grid-cols-[1.6fr_1fr] gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4">
         <SkeletonTile />
         <SkeletonTile />
       </div>

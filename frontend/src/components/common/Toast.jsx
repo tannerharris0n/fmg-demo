@@ -65,8 +65,8 @@ export function ToastContainer() {
           >
             <Icon className={clsx('h-4 w-4 shrink-0 mt-0.5', color)} strokeWidth={1.8} />
             <div className="min-w-0 flex-1">
-              <div className="text-[12.5px] text-ink-50 font-medium leading-snug">{t.message}</div>
-              {t.detail && <div className="text-[11px] text-ink-400 mt-0.5">{t.detail}</div>}
+              <div className="text-base text-ink-50 font-medium leading-snug">{t.message}</div>
+              {t.detail && <div className="text-xs text-ink-400 mt-0.5">{t.detail}</div>}
             </div>
             <button
               onClick={() => dismiss(t.id)}

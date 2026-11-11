@@ -18,15 +18,15 @@ export function HaClusters({ data = [] }) {
       icon={ShieldCheck}
       to="/fabric/ha"
     >
-      <ul className="space-y-1.5 text-[11.5px]">
+      <ul className="space-y-1.5 text-sm">
         {data.map((c) => (
           <li key={c.name} className="flex items-center justify-between">
             <span className="flex items-center gap-2 min-w-0">
               <StatusDot status={c.status} />
               <span className="text-ink-200 truncate">{c.name}</span>
-              <span className="text-ink-400 text-[10.5px]">{c.mode}</span>
+              <span className="text-ink-400 text-xs">{c.mode}</span>
             </span>
-            <span className={clsx('text-[11px]', toneClass(c.status))}>{c.syncNote}</span>
+            <span className={clsx('text-xs', toneClass(c.status))}>{c.syncNote}</span>
           </li>
         ))}
       </ul>

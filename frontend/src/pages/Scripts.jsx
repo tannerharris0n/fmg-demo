@@ -32,14 +32,14 @@ function ScriptBody({ body, type }) {
       <div className="flex items-center justify-between px-3 py-1.5 border-b border-surface-600/60 bg-surface-900">
         <div className="flex items-center gap-2">
           <Terminal className="h-3 w-3 text-ink-400" strokeWidth={1.7} />
-          <span className="text-[10.5px] text-ink-400 uppercase tracking-wider">{type}</span>
+          <span className="text-xs text-ink-400 uppercase tracking-wider">{type}</span>
         </div>
-        <button onClick={onCopy} className="text-[11px] text-ink-400 hover:text-ink-200 transition inline-flex items-center gap-1">
+        <button onClick={onCopy} className="text-xs text-ink-400 hover:text-ink-200 transition inline-flex items-center gap-1">
           <Copy className="h-3 w-3" strokeWidth={1.8} />
           copy
         </button>
       </div>
-      <pre className="text-[11.5px] font-mono leading-relaxed p-3 text-ink-200 overflow-x-auto">
+      <pre className="text-sm font-mono leading-relaxed p-3 text-ink-200 overflow-x-auto">
         {lines.map((l, i) => (
           <div key={i} className="flex">
             <span className="select-none text-ink-600 tabular-nums pr-3 text-right" style={{ minWidth: 30 }}>{i + 1}</span>
@@ -54,25 +54,25 @@ function ScriptBody({ body, type }) {
 function ScriptDetail({ script }) {
   if (!script) return <EmptyState icon={FileCode2} title="Select a script" hint="Pick from the library on the left to view its body and run history." />;
 
-  const onRun = () => toast.info('Script run is read-only in demo', {
+  const onRun = () => toast.info('Running scripts is disabled in this read-only demo', {
     detail: `Would queue "${script.name}" for device selection`,
   });
-  const onDryRun = () => toast.info('Dry run is read-only in demo', {
+  const onDryRun = () => toast.info('Dry runs are disabled in this read-only demo', {
     detail: `Would simulate "${script.name}" against staged devices without committing`,
   });
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <h2 className="text-[15px] font-semibold text-ink-50">{script.name}</h2>
             <Badge variant={script.type === 'CLI' ? 'info' : 'warning'}>{script.type}</Badge>
           </div>
-          <p className="text-[12px] text-ink-400">{script.description}</p>
+          <p className="text-sm text-ink-400">{script.description}</p>
           <div className="flex flex-wrap gap-1 mt-2">
             {script.tags.map((t) => (
-              <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-surface-800 text-ink-400">
+              <span key={t} className="text-2xs px-1.5 py-0.5 rounded bg-surface-800 text-ink-400">
                 {t}
               </span>
             ))}
@@ -98,8 +98,8 @@ function ScriptDetail({ script }) {
 function MetaBox({ label, value, mono }) {
   return (
     <div className="bg-surface-800 rounded-md px-3 py-2">
-      <div className="text-[10px] text-ink-400 uppercase tracking-wider">{label}</div>
-      <div className={clsx('text-[12.5px] mt-0.5 text-ink-50 font-medium', mono && 'font-mono')}>{value}</div>
+      <div className="text-2xs text-ink-400 uppercase tracking-wider">{label}</div>
+      <div className={clsx('text-base mt-0.5 text-ink-50 font-medium', mono && 'font-mono')}>{value}</div>
     </div>
   );
 }
@@ -107,8 +107,8 @@ function MetaBox({ label, value, mono }) {
 function RunHistory({ runs }) {
   const { sorted, sort, toggle } = useSortable(runs, { key: 'startedAt', dir: 'desc' });
   return (
-    <table className="w-full text-left text-[11.5px]">
-      <thead className="text-ink-400 text-[10.5px] border-b border-surface-600/60">
+    <table className="w-full text-left text-sm">
+      <thead className="text-ink-400 text-xs border-b border-surface-600/60">
         <tr>
           <SortableTh sortKey="startedAt" sort={sort} onToggle={toggle}>Time</SortableTh>
           <SortableTh sortKey="script"    sort={sort} onToggle={toggle}>Script</SortableTh>
@@ -165,8 +165,8 @@ export default function Scripts() {
   const recentFails = data.recentRuns.filter((r) => r.result === 'fail').length;
 
   return (
-    <div className="space-y-3 animate-fade-in">
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4 animate-fade-in">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <KpiCard label="Scripts in library" value={data.library.length} icon={Code2} iconTone="info" />
         <KpiCard label="Total executions" value={totalRuns} icon={Play} iconTone="muted" />
         <KpiCard label="Recent runs (7d)" value={data.recentRuns.length} icon={Clock} iconTone="muted" />
@@ -189,7 +189,7 @@ export default function Scripts() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search scripts..."
-              className="w-full bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-[11.5px] outline-none focus:border-accent placeholder:text-ink-400"
+              className="w-full bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-sm outline-none focus:border-accent placeholder:text-ink-400"
             />
           </div>
           <ul className="space-y-0.5">
@@ -205,10 +205,10 @@ export default function Scripts() {
                     )}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-[12px] font-medium truncate">{s.name}</span>
+                      <span className="text-sm font-medium truncate">{s.name}</span>
                       <Chip variant={s.type === 'CLI' ? 'info' : 'warning'}>{s.type}</Chip>
                     </div>
-                    <div className="text-[10.5px] text-ink-400 mt-0.5 truncate">{s.description}</div>
+                    <div className="text-xs text-ink-400 mt-0.5 truncate">{s.description}</div>
                   </button>
                 </li>
               );

@@ -29,13 +29,13 @@ export function DriftAlerts({ data = [] }) {
             key={a.device}
             className={clsx('rounded-md px-3 py-2 border', bgFor(a.severity))}
           >
-            <div className="flex items-center justify-between text-[11.5px]">
+            <div className="flex items-center justify-between text-sm">
               <span className={clsx('font-semibold', toneFor(a.severity))}>{a.device}</span>
               <Chip variant={a.severity}>
                 {a.diffCount} diff{a.diffCount === 1 ? '' : 's'}
               </Chip>
             </div>
-            <div className="text-[10.5px] text-ink-400 mt-1">{a.note}</div>
+            <div className="text-xs text-ink-400 mt-1">{a.note}</div>
           </li>
         ))}
       </ul>

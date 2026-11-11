@@ -36,11 +36,14 @@ function StatusPill({ device }) {
   return (
     <Tooltip content={tipText}>
       {device.status === 'ok' ? (
-        <StatusDot status="ok" />
+        <span className="flex items-center gap-1.5">
+          <StatusDot status="ok" />
+          <span className="text-xs text-ink-400">online</span>
+        </span>
       ) : (
         <span className="flex items-center gap-1.5">
           <StatusDot status={device.status} />
-          <span className={clsx('text-[11px]', device.status === 'danger' ? 'text-rose-400' : 'text-amber-400')}>
+          <span className={clsx('text-xs', device.status === 'danger' ? 'text-rose-400' : 'text-amber-400')}>
             {device.note || device.status}
           </span>
         </span>
@@ -92,8 +95,8 @@ function AllView({ devices, query }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left text-[12px]">
-        <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+      <table className="w-full text-left text-sm">
+        <thead className="text-ink-400 text-xs border-b border-surface-600/60">
           <tr>
             <SortableTh sortKey="status"   sort={sort} onToggle={toggle}>Status</SortableTh>
             <SortableTh sortKey="name"     sort={sort} onToggle={toggle}>Name</SortableTh>
@@ -135,27 +138,27 @@ function SiteView({ devices, query }) {
       {grouped.map(([site, items]) => (
         <section key={site}>
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-[13px] font-semibold flex items-center gap-2">
+            <h3 className="text-base font-semibold flex items-center gap-2">
               <MapPin className="h-3.5 w-3.5 text-ink-400" strokeWidth={1.7} />
               {site}
             </h3>
             <Badge variant="neutral">{items.length}</Badge>
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {items.map((d) => (
               <Link key={d.name} to={`/devices/${encodeURIComponent(d.name)}`} className="block bg-surface-800 hover:bg-surface-700 rounded-md px-3 py-2 transition">
                 <div className="flex items-center gap-2">
                   <StatusDot status={d.status} />
-                  <span className="text-[12px] font-medium truncate">{d.name}</span>
+                  <span className="text-sm font-medium truncate">{d.name}</span>
                 </div>
-                <div className="text-[10.5px] text-ink-400 mt-1 flex items-center gap-1.5">
+                <div className="text-xs text-ink-400 mt-1 flex items-center gap-1.5">
                   <span>{d.platform.replace('FortiGate-', '')}</span>
                   <span>·</span>
                   <span>{d.firmware}</span>
                 </div>
                 {d.note && (
                   <div className={clsx(
-                    'text-[10.5px] mt-1',
+                    'text-xs mt-1',
                     d.status === 'danger' ? 'text-rose-400' : 'text-amber-400'
                   )}>
                     {d.note}
@@ -185,12 +188,12 @@ function UnmanagedView({ devices, query }) {
 
   return (
     <>
-      <div className="rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-[11.5px] text-amber-200 mb-3">
+      <div className="rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-sm text-amber-200 mb-3">
         These devices are visible on the network but have not been imported into FortiManager. Import to start enforcing policy packages and collecting logs.
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-[12px]">
-          <thead className="text-ink-400 text-[11px] border-b border-surface-600/60">
+        <table className="w-full text-left text-sm">
+          <thead className="text-ink-400 text-xs border-b border-surface-600/60">
             <tr>
               <th className="py-2 px-2 font-medium">Name</th>
               <th className="py-2 px-2 font-medium">Platform</th>
@@ -214,8 +217,8 @@ function UnmanagedView({ devices, query }) {
                 <td className="py-2 px-2 text-amber-300">{d.note}</td>
                 <td className="py-2 px-2 text-right">
                   <button
-                    onClick={() => toast.info('Device import is read-only in demo', { detail: `Would add ${d.name} to FMG management` })}
-                    className="text-[11.5px] text-sky-300 hover:text-sky-200 font-medium"
+                    onClick={() => toast.info('Device import is disabled in this read-only demo', { detail: `Would add ${d.name} to FMG management` })}
+                    className="text-sm text-sky-300 hover:text-sky-200 font-medium"
                   >Import ↗</button>
                 </td>
               </tr>
@@ -260,23 +263,23 @@ function FirmwareView({ devices, query }) {
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-3">
                 <Badge variant={tone}>{version}</Badge>
-                <span className="text-[11.5px] text-ink-400 tabular-nums">{items.length} devices · {pct}%</span>
+                <span className="text-sm text-ink-400 tabular-nums">{items.length} devices · {pct}%</span>
               </div>
               {version.includes('beta') && (
-                <span className="text-[10.5px] text-sky-300">beta lab — pre-release testing</span>
+                <span className="text-xs text-sky-300">beta lab — pre-release testing</span>
               )}
               {version.startsWith('7.2') && (
-                <span className="text-[10.5px] text-rose-300">EOL imminent — upgrade plan needed</span>
+                <span className="text-xs text-rose-300">EOL imminent — upgrade plan needed</span>
               )}
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {items.map((d) => (
                 <Link key={d.name} to={`/devices/${encodeURIComponent(d.name)}`} className="block bg-surface-800 hover:bg-surface-700 rounded-md px-3 py-2 transition">
                   <div className="flex items-center gap-2">
                     <StatusDot status={d.status} />
-                    <span className="text-[12px] font-medium truncate">{d.name}</span>
+                    <span className="text-sm font-medium truncate">{d.name}</span>
                   </div>
-                  <div className="text-[10.5px] text-ink-400 mt-1">
+                  <div className="text-xs text-ink-400 mt-1">
                     {d.platform.replace('FortiGate-', '')} · {d.site}
                   </div>
                 </Link>
@@ -312,7 +315,7 @@ export default function Devices() {
     null;
 
   return (
-    <div className="space-y-3 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       <Tile
         title="Devices"
         subtitle={subtitle}
@@ -326,7 +329,7 @@ export default function Devices() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
-                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-[11.5px] outline-none focus:border-accent w-44"
+                className="bg-surface-800 border border-surface-600 rounded-md pl-7 pr-2 py-1 text-sm outline-none focus:border-accent w-44"
               />
             </div>
             <div className="inline-flex bg-surface-800 rounded-md p-0.5 gap-0.5 ring-1 ring-surface-600/60">
@@ -338,7 +341,7 @@ export default function Devices() {
                     key={v.id}
                     onClick={() => setParams(v.id === 'all' ? {} : { view: v.id })}
                     className={clsx(
-                      'flex items-center gap-1 text-[11px] px-2 py-1 rounded font-medium transition',
+                      'flex items-center gap-1 text-xs px-2 py-1 rounded font-medium transition',
                       active ? 'bg-surface-700 text-ink-50' : 'text-ink-400 hover:text-ink-200'
                     )}
                   >
